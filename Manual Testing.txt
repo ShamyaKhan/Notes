@@ -1,0 +1,211 @@
+Software:
+-> a collection of computer programs that help us to perform a task
+-> system software - device drivers, os, servers, utilities
+-> programming software - compilers, debuggers, interpreters
+-> application software - web apps, mobile apps, desktop apps
+
+
+Software Testing:
+-> a part of the software development process
+-> an activity to detect and identify the defects in software
+-> objective is to release a quality product to the client
+
+
+Software Quality:
+-> based on certain parameters
+-> bug free
+-> delivered on time
+-> within budget
+-> meets requirements
+-> maintainable
+-> customer justification
+
+
+Project: 
+-> the software is developed for specific customer based on the requirements
+-> mostly done by service based company
+
+Product: 
+-> the software is developed for multiple customers based on market requirements
+-> mostly done by product based company
+
+
+Error, Bug & Failure:
+-> error is a human mistake or incorrect human action. development environment
+-> bug/defect is deviation from expected behavior. testing environment
+-> failure is some aspect or feature of the application is not working. deviation 
+   identified by the end user in production environment
+
+
+Why the software has bugs?
+-> miscommunication between developers and testers
+-> software complexity - very big project with many modules, testers, developers
+-> programming errors - running but output is nor correct
+-> changing requirements 
+-> lack of skilled testers - missing the bugs. their job is to break the software
+
+
+SDLC:
+-> Software Development Life Cycle
+-> a process used by industry to design, develop and test softwares
+-> 3 pillers - people, process, product
+-> sdlc is related to the process
+-> 5 phases
+-> Requirement analysis
+-> Design
+-> Development
+-> Testing
+-> Maintenance
+
+
+
+Waterfall Model:
+-> Requirement analysis - business people like project manager or product manager 
+   communicates with the client and collect requirements. They prepare SRS (Software
+   Requirement Specification) document
+-> System design - High level design and Low level design. Designers will prepare 
+   design document
+-> Implementation - developers will implement/develop the software
+-> Testing - testers will test the software
+-> Deployment - deploy the software in customer environment
+-> Maintenance
+
+*** Each phase depends on previous phase
+
+Advantages of Waterfall Model:
+-> Quality of the product is good - every phase has detailed documentation
+-> Since requirement changes are not allowed, chances of finding bugs are less
+-> Initial investment in less, since testers are hired later
+-> Preferred for small projects where requirements are freezed
+
+Disadvantages of Waterfall Model:
+-> Requirement changes are not allowed
+-> If there is defect in requirement, that will be continued in later phases
+-> Total investment is more because time taking for rework on defect is time-consuming
+   which leads to high investment
+-> Testing will start only after coding
+
+
+Spiral Model:
+-> Planning - requirement analysis
+-> Risk Analysis - prototype/design
+-> Engineering and execution - development and testing
+-> Evaluation - testing, customer evaluation
+-> After these phases, one version of the software is delivered to the customer
+-> Then, customer gives more requirements
+-> Go through the same cycle and release another version/module on top of existing version
+-> It is iterative model
+-> Follow this model whenever there is dependency on the modules
+-> Suitable for products as market requirements change very often
+-> Also known as version control model
+
+*** Module: a component/feature of the software
+
+Advantages of Spiral Model:
+-> Testing is done in every cycle, before going to the next cycle
+-> Customer will get to use software for every module
+-> Requirement changes are allowed after every cycle before going to next cycle
+
+Disadvantages of Spiral Model:
+-> Requirement changes are not allowed in between the cycles
+-> Every cycle of spiral model looks like waterfall model
+-> There is no testing in requirement and design phase
+
+
+Prototype Model:
+-> Collect Initial Requirements
+-> Build Prototype and show it to customer
+-> If satisfied, then start Design, Coding, Testing 
+-> Every phase, customer will give inputs
+-> Comes between waterfall and spiral
+-> Can accommodate changes in development phase
+-> There is no iteration
+
+V Model / VV Model (Verification and Validation):
+-> BRS/CRS/URS - Business/Customer/User Requirement Specification - done by business unit.
+   based on this document, we conduct User Acceptance Testing in the form of review. done
+   by testers and customers
+-> SRS - Software Requirement Specification document - documented for technical people
+   prepared and reviewed by product/project manager. System testing by testers. Only 
+   check if the software is working as per customer's requirements. Black-box testing
+-> Based on SRS, designers will prepare HLD and LLD. HLD contains main modules, LLD contains
+   sub-modules or low level modules. reviewed by designers. Integration testing by developers
+-> Coding phase. Unit testing by developers
+
+
+*** In every phase we conduct testing. 
+*** For documents, it is called static testing: review, walkthrough, inspection
+*** Testing that is conducted on the code/modules (Unit testing, Integration testing)
+    are known as White-Box Testing
+*** It is called white-box testing because we have to know the internal logic of programmes.
+    conducted by developers themselves
+*** Black-box testing - we don't know what is inside the box. System testing and user 
+    acceptance testing comes under this category because, testers test the software 
+    without knowledge of interal programmes. They only check the functionalities
+
+
+V-Shape of V model:
+-> Static testing: first 3 phases. BRS, SRS, HLD/LLD - Review the documents
+-> Dynamic testing: testing the actual software. starts from coding phase. unit testing,
+   integration testing, system testing, user acceptance testing. they will refer to the
+   respective documents that were created previously
+
+Verification:
+-> checks whether we are building the right product
+-> focuses on documentation
+-> typically involves review, walkthrough, specification
+
+Validation:
+-> checks whether we are building the product right
+-> takes place after verifications are complete
+-> focuses on software
+-> typically involves unit testing, integration testing, user acceptance testing
+
+Advantages of V Model: Testing is involved in every phase
+Disadvantages of V Model: Initial investment and documentation is more
+
+
+Static Testing: Review, Walkthrough, Inspection
+Dynamic Testing: Unit Testing, Integration Testing, System Testing, User Acceptance Testing
+
+
+Review:
+-> conducted on documents to ensure correctness and completeness
+-> design reviews
+-> code reviews
+-> test plan reviews
+-> test cases reviews
+
+Walkthrough:
+-> informal review
+-> authors read documents or code and discuss with peers
+-> it is not pre-planned and can be done whenever required
+-> does not have minutes of the meet
+
+Inspection:
+-> most formal review type
+-> at least 3-8 people will sit reader (author), writer (note down the questions and 
+   clarifications), moderator (anchor/organizer)
+-> proper schedule will be intimated via email to the concerned developer/tester
+
+Three P: people, process, product 
+
+Quality Assurance:
+-> process related
+-> high-level management people
+-> make sure everyone is following the process properly
+-> involved in every phase of SDLC
+-> focuses on building in quality
+-> for preventing defects
+-> process oriented
+
+Quality Control:
+-> actual testing of the software
+-> people related (testers)
+-> involved only during testing
+-> focuses on testing for quality
+-> for detecting defects
+-> product oriented
+
+Quality Engineering:
+->

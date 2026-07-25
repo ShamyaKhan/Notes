@@ -1,0 +1,36 @@
+Basics:
+-> Kubernetes is a tool to run a bunch of containers together
+-> We give it some configuration files to describe how we want our containers to run and       interact with each other
+-> Then kubernetes creates these containers for us that will run our program and handle
+   communication or network requests between all containers 
+-> In kubernetes, we create something called cluster which is a set of different virtual
+   machines 
+-> The virtual machines are known as nodes
+-> They are managed by master, a program to manage everything in cluster
+-> We will tell kubernetes to run some program for us
+-> It's going to take our program and randomly assign to one of nodes to execute 
+-> We are going to create a common communication channel inside of our cluster, which 
+   we will send request to and it will automatically figure out how to route request off to       appropriate service that is running inside of our application
+
+
+
+-> A service gives us access to running pods/containers inside of cluster
+
+
+Terminologies:
+-> Cluster: a collection of nodes and a master to manage them
+-> Node: a virtual machine that will run our containers
+-> Pod: more or less a running container. a pod can run multiple containers
+-> Deployment: monitors a set of pod, makes sure they are running. restarts them 
+   if they crashed
+-> Service: prodives an easy to remember URL to access a running container
+
+
+Config files:
+-> tells kubernetes about different deployments, pods and services (referred to as objects)
+   that we want to create
+-> written in YAML syntax
+-> always store these files within our project source code - they are documentation
+-> we can create objects without config files but won't. config files provide a precise
+   definition of what your cluster is running
+-> 

@@ -1,0 +1,188 @@
+Overview:
+1. Traditionally, react is used to make highly interactive dynamic apps that heavily rely
+   on JS + data fetching (airbnb, instagram, tiktok)
+2. Many websites do not require heavy interaction or dynamic data fetching, known as static
+   or content-driven websites (blogs, news, wikis, educational, events, landing pages,
+   government, corporate) 
+3. One of the primary goals of next is to expand the use of react to static sites
+4. The files and folders inside 'src/app' folder determines the routes in the app
+5. Files called page.tsx define a route that the user can visit and they must have a export
+   default of a react component
+6. The name of the folder that a 'page.tsx' is in controls the route
+7. Every component is rendered as a child of the component inside layout.tsx
+8. In path import, the '@' symbol indicates the src directory.
+9. On the server, the Image component makes several resized version of an image for 
+   different device sizes
+10. How next decides the height/width of placeholder image before actual image loads:
+    -> for local image (inside source code), dimensions are taken from the imported image
+    -> for remote image, we have to assign height/width or fill property (fill parent)
+11. Server Action: a function that is called when a form is submitted
+12. It is the number one way to change data in a next app
+13. It has super close integration with html forms
+
+
+Components:
+1. Client component: react components we typically use
+2. Server component: bends the rules of traditional component a bit. Better performance + UX
+3. By default all components are server components
+4. Can use async/await. No need to use useState or useEffect for data fetching
+5. Cannot use any kind of hook, cannot assign any event handlers
+6. Client component cannot import/show server component directly
+7. Use client component if hooks, event handlers are required
+8. When browser makes a request to next server, it renders some components 
+9. Server component(parent) -> client component (child) => some html are sent immediately
+10. The html file will have a script tag that says look back to next server and try to
+    download some JS
+11. On second request, next server will look at all client components, extract all JS into
+    a file, send it back to client browser
+12. Client component is rendered on the server one time when the user first makes a request
+    for the first time
+13. When we submit a form, client-side JS collects the data, assembles them into a packet 
+    of data and sends them as post request to next server.
+14. Next server passes the data to server action (running on server)
+15. Server action interacts with database and sends a response (ex: redirect)
+
+
+
+Create Records:
+1. create a prisma client to access database
+2. create a form using react to collect data
+3. defince a server action to validate the input and create the record
+4. redirect
+
+
+Fetch Records:
+1. create a server component with async keyword
+2. make an http request or directly access the database
+3. render data directly or pass it to a child component
+
+
+Pages:
+1. page.tsx -> displays the primary content for a page
+2. layout.tsx -> wraps up the currently displayed page. used to show content common accross
+		 many pages
+3. not-found.tsx -> displayed when we call the notFound() function
+4. loading.tsx -> displayed when a server component is fetching some data
+5. error.tsx -> displayed when an error occurs in a server component (must be a client comp)
+6. route.tsx -> defines API endpoints  
+
+
+
+Server Actions in client components:
+Option 1:
+-> Define server action in server component and pass it as props to the client component
+-> Server components cannot pass event handlers down to client components - this is one
+   exception
+Option 2:
+-> Defince server action in a separate file and import it into client component
+-> Only have to write 'use server' once at the top of the file
+
+
+Calling server actions from client components:
+Option 1:
+-> use bind() method to customize arguments
+-> first argument will be the bound argument
+-> second argument will be 'FormData' containing data form (if any exists)
+-> form will work even if the user is not running JS in browser
+Option 2:
+-> not tied to a form, only the arguments passed directly to server action are received
+-> make sure we have updated data before attempting to navigate
+-> closer to classic react behavior
+
+
+Error Handling with Server Action:
+1. a big point of forms is that they can work without JS in browser
+2. right now, forms in our pages are sending info to a server action
+3. we need to communicate info from server a action back to a page
+4. react-dom contains a hook called useFormState specifically for this
+5. if we put redirect() inside try block, the catch block will capture it as error
+
+
+Caching:
+Four different caching systems (first three run in dev mode)
+1. Data Cache: responses from requests made with 'fetch' are stored and used accross requests
+2. Router Cache: 'soft' navigation between routes are cached in browser and reused when a
+   user revisits the page
+3. Request Memoization: make two or more 'GET' requests with 'fetch' during a users request
+   to your server. Only one 'GET' is executed
+4. Full Route Cache: at build time, next decides if your route is static or dynamic (for all
+   routes). If is static, page is rendered and the result is stored. In production, users 
+   are given this
+   pre-rendered result 
+
+
+Static or Dynamic Routes:
+1. npm run build
+2. o -> next thinks this route contains only static data. It will render the page NOW, ONE         TIME and give that version to everyone who visits our app
+3. λ -> next thinks this route contains dynamic data. It will render the page whenever
+  	someone visits it
+4. all pages are by default static
+
+
+What makes a page dynamic?
+1. Calling a dynamic function or referencing a dynamic variable when a route renders
+   cookies.set(), cookies.delete(), useSearchParams(), searchParams prop
+2. Assigning specific 'route segment config' options  
+   export const dynamic = 'force-dynamic', export const revalidate = 0
+3. Calling fetch and opting out of caching of the response
+   fetch('...', {next: {revalidate: 0}})
+4. Using a dynamic route
+   /snippets/[id]/page.tsx
+
+
+
+Cache Control:
+1. Time-based: every x seconds, ignore the cached response and fetch new data
+   -> front page of social media site
+   -> data is changing all the time - only get top posts every 10-30 seconds
+2. On-demand: forcibly purge a cached response
+   -> any app where we know when data changes and the user expects to see up-to-date data
+   -> our app when create/edit/delete server actions run
+3. Disable caching: don't do any caching at all    
+   -> when next server uses data from outside API
+   -> any app where we don't know when data changes or when we expect data to be different
+      for every request and user still expects to see up-to-date data
+
+
+Enable caching with GenerateStaticParams:
+-> This occurs at build time 
+-> We use the current data in database 
+
+
+#Important:
+-> route.ts inside app directory is used to implement API request handlers so that outside
+   web services can talk to our next js application
+
+
+Recommended Initial Design Process:
+1. Identify all the different routes of the app and data that will be shown on each of them
+2. Make 'path helper' function
+3. Create routing folders and page.tsx files
+4. Identify the places where data changes in the app
+5. Make empty server actions for each of those
+6. Add in comments on what paths you'll need to revalidate for each server action
+
+
+Static Caching While Using Auth
+-> Handling cookies === dynamic
+-> Every page displaying the header is dynamic because the header is accessing cookies
+-> No access of cookies === static
+-> 'useSession' doesn't directly access cookies - it makes a request to the backend 
+   to figure out the auth status
+-> Layout --> Header --> HeaderAuth (client component) --> useSession() 
+
+
+
+Considerations around where to fetch data :
+
+-> option 1: page component gets data, passes it to child
+-> easy to see what data a route needs to be displayed
+-> easier to make child component reusable
+-> easier to avoid n+1 query issues
+-> can lead to overfetching data
+-> can lead to duplicate code in other pages using child component
+-> sometimes annoying to write interface for complex query data
+
+-> option 2: child component fetches its own data
+-> easier to build skeleton loading pages
+-> child components implementation is locked in

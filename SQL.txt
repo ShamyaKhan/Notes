@@ -1,0 +1,303 @@
+Overview:
+1. We use database to store data where data gets persisted in hard-disk or memory
+2. To connect to a database we need a client which can be any piece of software
+3. After connecting to database, we write SQL to communicate/interact with the database
+4. It is like a communication language
+5. It is supported by Oracle, MySQL, Microsoft SQL, PostgreSQL
+6. Challenges: writing efficient queries, designe datavase schema, understanding when to use      advanced features, manage database in production environment
+7. Database design process: what kind of thing we are storing, what properties does thing
+   have, what type of data each properties contain
+8. Each column records one property and each row represents one thing
+
+
+SQL Query:
+1. Made up of keywords and identifiers
+2. Keywords: tell database what we want to do. written in capital letters
+3. Identifiers: tell database what we want to act on. written in lowercase letters
+4. VARCHAR(50): variable length character. no longer than 50 characters
+5. INTEGER: number without a decimal 
+6. CREATE TABLE cities (name VARCHAR(50), country VARCHAR(50), population INTEGER, 
+   area INTEGER);
+7. INSERT INTO cities (name, country, population, area) 
+   VALUES ('Tokyo', 'Japan', 38505000, 8223);
+8. INSERT INTO cities (name, country, population, area)
+   VALUES ('Delhi', 'India', 28125000, 224), ('Shanghai', 'China', 22125000, 4015),
+          ('Sau Paulo', 'Brazil', 20935000, 3043);
+9. SELECT * FROM cities;
+10. SELECT name, country FROM cities;
+
+
+SQL Query to transform of process data:
+1. Math operators: ^ (exponent),  |/ (square root),  @ (absolute),  % (remainder), +-*/
+2. SELECT name, population / area AS population_density FROM cities;
+3. String operators: || (joins two strings)
+4. SELECT name || ', ' || country AS location FROM cities;
+5. String functions: CONCAT(), LOWER(), UPPER(), LENGTH()
+6. SELECT CONCAT(name, ', ', country) AS location FROM cities;
+7. SELECT CONCAT(UPPER(name), ', ', UPPER(country)) AS location FROM cities;
+8. SELECT UPPER(CONCAT(name, ', ', country)) AS location FROM cities;
+
+
+Filtering:
+1. Execution order: FROM (first), WHERE (second), SELECT (third)
+2. Comparison operator inside WHERE keyword: =, >, <, >=, <=, <>, !=, BETWEEN, NOT IN, IN
+3. SELECT name, area FROM cities WHERE area > 4000;
+4. SELECT name, area FROM cities WHERE area BETWEEN 2000 AND 4000;
+5. SELECT name, area FROM cities WHERE name IN ('Delhi', 'Shanghai');
+6. SELECT name, area FROM cities WHERE area NOT IN (3043, 8223);
+7. SELECT name, area FROM cities WHERE area NOT IN (3043, 8223) OR name = 'Delhi';
+8. SELECT name, population/area AS density FROM cities WHERE population/area > 5000;
+
+
+Update and Delete:
+1. UPDATE cities SET population = 3950500 WHERE name = 'Tokyo';
+2. DELETE FROM cities where name = 'Tokyo';
+3. DROP TABLE cities;
+
+
+What Tables Should We Make?
+-> Try to create a separate table for each feature
+-> Features that have relationship between two types of resources need to be reflected
+   in the table design
+
+
+Types of Relationships:
+1. One-to-Many:  a user has many photos
+		 a photo has many comments
+2. Many-to-One:  a photo has one user / a bunch of photos belong to one user
+		 a comment has one photo / a bunch of comments belong to one photo
+3. One-to-One:   boat <--> captain, capitol <--> country
+4. Many-to-many: students <--> classes, tasks <--> engineers, movies <--> actors
+
+
+# Primary key: uniquely identifies a record/row in the table
+# Foreign key: identifies a record in another table that this record is associated with
+# Many side of the relationship gets the foreign key column
+
+
+Primary key:
+-> Each row in every table has one unique primary key
+-> 99% of the time called id
+-> Either an integer or UUID
+-> Will never change
+
+Foreign key:
+-> Rows only have this if they belong to another record
+-> Many rows in the same table can have the same foreign key
+-> Usually called something like xyz_id
+-> Exactly equal to the primary of the referenced row
+-> Will change if the relationship changes
+
+
+Data Consistency:
+-> Ability of database to make sure the information we put into and work with, actually 
+   makes sense
+
+Foreign key constraints around data insertion:
+1. We insert a photo that is tied to a user that exists -> everything works OK
+2. We insert a photo and refer to a user that doesn't exist -> error
+3. We insert a photo that is not tied to any user -> put NULL as the value of user_id
+
+Foreign key constrains around data deletion:
+What happens if we delete a user while a photo is still referencing it
+1. ON DELETE RESTRICT -> throw an error
+2. ON DELETE NO ACTION -> throw an error
+3. ON DELETE CASCADE -> delete the photo too
+4. ON DELETE SET NULL -> set the user_id of the photo to NULL
+5. ON DELETE SET DEFAULT -> set the user_id of the photo to a default value if provided
+
+
+-> CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR(50));
+-> CREATE TABLE photos (id SERIAL PRIMARY KEY, url VARCHAR(200), 
+    		        user_id INTEGER REFERENCES users(id));
+-> CREATE TABLE photos (id SERIAL PRIMARY KEY, url VARCHAR(200), 
+    		        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE);
+-> SELECT * FROM photos WHERE user_id = 4;
+-> SELECT url, username FROM photos JOIN users ON users.id = photos.user_id;
+
+
+Joins:
+-> Produces values by merging together rows from different related tables
+-> Use a join most times when you're asked find data that involves multiple resources
+-> Behind the scene, it is like joining the two tables and creating a new temporary table
+   with all the columns from those two tables
+-> Table order between FROM and JOIN frequently makes a difference
+-> We must give context if column names collide
+-> Tables can be renamed using the AS keyword
+-> There are a few kinds of joins
+
+Join Query:
+-> SELECT content, username FROM comments JOIN users ON users.id = comments.user_id;
+-> SELECT content, url from comments JOIN photos ON photos.id = comments.photo_id;
+-> SELECT comments.id AS commentID, photos.id as photoID FROM photos AS p JOIN comments 
+   ON photos.id = comments.photo_id;
+-> SELECT comments.id AS commentID, p.id FROM photos As p JOIN comments ON 
+   p.id = comments.photo_id;
+
+Aggregations:
+-> Look at many rows and calculate a single value
+-> Words like 'most', 'average', 'least' are signs to use aggregation
+
+
+
+Inner Join:
+-> default
+-> If there are rows or values of one table that do not match up with the other table, 
+   it will be dropped from the result
+-> SELECT url, username FROM photos INNER JOIN users ON users.id = photos.user_id;
+
+Left Outer Join:
+-> If anything from the left/source table does not match up with the right table, 
+   we will not drop that. 
+-> The missing values will be given NULL
+-> Order of table in query makes a difference
+-> SELECT url, username FROM photos LEFT JOIN users ON users.id = photos.user_id;
+
+Right Outer Join:
+-> If anything from the right/source table does not match up with the right table, 
+   we will not drop that. 
+-> The missing values will be given NULL
+-> Order of query in table makes a differene
+-> SELECT url, username FROM photos RIGHT JOIN users ON users.id = photos.user_id;
+
+Full Join:
+-> Includes all rows from both tables
+-> The missing values will be given NULL
+-> SELECT url, username FROM photos FULL JOIN users ON users.id = photos.user_id;
+
+
+Where with Join:
+-> SELECT url, contents FROM comments JOIN photos ON photos.id = comments.photo_id
+   WHERE comments.user_id = photos.user_id;
+
+
+Three way Join:
+-> SELECT url, contents, username 
+   FROM comments JOIN photos 
+   ON photos.id = comments.photo_id 
+   JOIN users 
+   ON users.id = comments.user_id AND users.id = photos.user_id;
+
+-> SELECT title, name, rating 
+   FROM reviews JOIN books 
+   ON books.id = reviews.book_id 
+   JOIN authors
+   ON authors.id = books.author_id AND authors.id = reviews.reviewer_id;
+   
+
+
+Grouping:
+-> reduces many rows down to fewer rows
+-> done by using GROUP BY keyword
+-> visualizing the result is the key to use
+-> SELECT user_id FROM comments GROUP BY user_id;
+-> find the set of all unique user_id's
+-> take each row and assign it to a group based on its user_id
+-> only allowed to select the grouped column
+
+
+Aggregates:
+-> reduces many values down to one
+-> done by using aggregate functions
+-> COUNT(), SUM(), AVG(), MIN(), MAX()
+-> SELECT MAX(id) FROM comments;
+
+
+Grouping and Aggregate together:
+-> SELECT user_id, MAX(id) FROM comments GROUP BY user_id;
+-> SELECT user_id, COUNT(id) AS num_comments_created FROM comments GROUP BY user_id;
+-> SELECT photo_id, COUNT(*) FROM comments GROUP BY photo_id;
+-> SELECT name, COUNT(*) FROM books JOIN authors ON authors.id = books.author_id
+   GROUP BY authors.name;
+
+
+*** Whenever we do COUNT() on a column, null values are not counted
+*** to solve that, SELECT COUNT(*) FROM photos;
+** SELECT user_id, COUNT(*) FROM comments GROUP BY user_id;
+
+
+Order of keywords in a query:
+-> FROM: specifies starting set of rows to work with
+-> JOIN: merges in data from additional tables 
+-> WHERE: filters set of rows 
+-> GROUP BY: groups rows by a unique set of values
+-> HAVING: filters set of groups (always used with GROUP BY)
+
+HAVING:
+-> SELECT photo_id, COUNT(*) FROM comments WHERE photo_id < 3 GROUP BY photo_id
+   HAVING COUNT(*) > 2;
+-> SELECT user_id, COUNT(*) FROM comments WHERE photo_id < 50 GROUP BY user_id
+   HAVING COUNT(*) > 20;
+-> SELECT manufacturer, SUM(price * units_sold) FROM phones GROUP BY manufacturer
+   HAVING SUM(price * units_sold) > 2000000;
+
+
+Sorting:
+-> SELECT * FROM products ORDER BY price;
+-> SELECT * FROM products ORDER BY price DESC;
+-> SELECT * FROM products ORDER BY price, weight;
+-> SELECT * FROM products ORDER BY price, weight DESC;
+
+
+OFFSET:
+-> skip some number of records in a result set
+-> SELECT * FROM users OFFSET 10;
+
+LIMIT:
+-> constraints the number of records we get back from a query
+-> SELECT * FROM users LIMIT 5;
+-> SELECT * FROM products ORDER BY price LIMIT 5;
+-> SELECT * FROM products ORDER BY price DESC LIMIT 5;
+-> SELECT * FROM products ORDER BY price DESC LIMIT 5 OFFSET 1;
+-> SELECT name FROM phones ORDER BY price DESC LIMIT 2 OFFSET 1;
+
+
+UNION, UNION ALL:
+-> takes the result of one query and join together / appends with the result of second query
+-> only allowed between results of two queries where the results have same columns
+-> (SELECT * FROM products ORDER BY price DESC LIMIT 4) UNION (SELECT * FROM products ORDER BY price / weight LIMIT 4);
+-> (SELECT manufacturer FROM phones WHERE price < 170) 
+   UNION 
+   (SELECT manufacturer FROM phones GROUP BY manufacturer HAVING COUNT(*) > 2);
+
+
+INTERSECT, INTERSECT ALL:
+-> finds the common rows in the results of two queries
+-> (SELECT * FROM products ORDER BY price DESC LIMIT 4) INTERSECT (SELECT * FROM products ORDER BY price / weight LIMIT 4);
+
+
+EXCEPT, EXCEPT ALL:
+-> finds rows that are present in the first query but not in the second query
+-> (SELECT * FROM products ORDER BY price DESC LIMIT 4) EXCEPT (SELECT * FROM products ORDER BY price / weight DESC LIMIT 4);
+
+
+Subquery:
+-> SELECT name, price FROM products WHERE price > (SELECT MAX(price) FROM products WHERE department = 'Toys');
+
+Subqueries can be used as:
+-> source of value - SELECT p1.name, (SELECT COUNT(name) FROM products)
+-> source of rows - FROM (SELECT * FROM products) AS p1 JOIN (SELECT * FROM products) AS p2 ON p1.id = p2.id 
+-> source of column - WHERE p1.id IN (SELECT id FROM products);
+
+Understanding the shape of a query result:
+-> SELECT * FROM orders - many rows, many columns
+-> SELECT id FROM orders - one column, many rows
+-> SELECT COUNT(*) FROM orders - one row, one column (single value / scalar query)
+
+Subquery in a SELECT statement:
+-> must return a single value
+-> SELECT name, price, (SELECT MAX(price) FROM products) FROM products WHERE price > 867;
+-> SELECT name, price, (SELECT price FROM products WHERE id = 3) AS id_3_price FROM products WHERE price > 867;
+-> SELECT name, price, price / (SELECT MAX(price) FROM phones) AS price_ratio FROM phones;
+
+Subquery in a FROM clause:
+-> as long as the outer queries (select/where) are compatible
+-> must have an alias applied to it
+-> SELECT name, price_weight_ratio FROM (SELECT name, price / weight AS price_weight_ratio FROM products) AS p WHERE price_weight_ratio > 5;
+-> SELECT * FROM (SELECT MAX(price) FROM products) AS p;
+-> SELECT AVG(order_count) FROM (SELECT user_id, COUNT(*) AS order_count FROM orders GROUP BY user_id) AS p
+-> SELECT MAX(avg_price) AS max_avg_price FROM (SELECT AVG(price) AS avg_price FROM phones GROUP BY manufacturer) AS p;
+
+Subquery in a JOIN clause:
+-> any subquery that returns data compatible with ON clause
+-> SELECT first_name FROM users JOIN (SELECT user_id FROM orders WHERE product_id = 3) AS o ON o.user_id = users.id;

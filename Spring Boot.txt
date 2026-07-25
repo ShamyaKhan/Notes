@@ -1,0 +1,106 @@
+-> makes it easier to get started with spring development
+-> minimizes the amount of manual configuration
+-> peforms auto configuration based on props files and JAR classpath
+-> helps resolve dependency conflict (maven or gradle)
+-> provides an embedded http server (tomcat, jetty, undertow)
+-> JAR file will include application code and server
+-> to deploy to an external server, we will need WAR (web application archive) file
+
+
+Why Maven:
+-> when building java project, we may need additional JAR files (spring, hibernate, 
+   Common Logging, JSON etc..)
+-> one approach is to download JAR files from each project website and manually add to
+   build path or classpath
+-> tell maven the projects you are working with (dependencies)
+-> maven will go out, download the JAR files for those projects and make them available
+   during compile/run
+
+Spring Projects:
+-> additional spring modules built on top of core spring framework
+-> only use what you need
+   - Spring Cloud, Spring Data
+   - Spring Batch, Spring Security
+   - Spring Web Services, Spring LDAP
+
+
+What is Maven?
+-> project management tool
+-> most popular use - build management and dependencies
+
+How Maven Works?
+-> maven will read project config file
+-> check maven local repository
+-> if not present, maven will download from maven central repository
+-> save in local repo
+
+
+Advantages of Maven:
+-> Dependency management - no more missing JAR files
+-> Building and running projects - no more build path / classpath issues
+-> Standard directory structure
+
+
+pom.xml
+-> Project Object Model
+-> configuration file for our project
+-> located in the root of maven project
+-> structure 
+   - project metadata (project name, version, output file type - JAR/WAR)
+   - dependencies (list of projects we depend on - spring, hibernate, etc)
+   - plugins (additional custom tasks to run - generate JUnit test reports etc)
+
+
+Project Co-ordinates:
+-> uniquely identifies a project
+-> precise information to find your house
+	<groupId>com.luv2code</groupId>  - city
+	<artifactId>mycoolapp</artifactId>  - street
+	<version>1.0.FINAL</version>  -  house number
+
+
+Project Files:
+-> By default, Spring Boot will load properties from application.properties
+-> Do not use src/main/webapp directory if your application is packages as a JAR
+-> It works only with WAR packaging
+
+
+Spring Boot Starters:
+-> a curated list of maven dependencies grouped together
+-> compatible versions
+-> reduces the amount of maven configuration
+-> in sprint initializr, simply select web dependency and automatically get
+   spring-boot-starter-webmvc in pom.xml
+
+
+Spring Boot Starter Parent:
+-> Spring Boot provides a starter parent
+-> It is a special starter that provides maven defaults 
+
+
+Spring Boot Actuator:
+-> Exposes endpoints to monitor and manage yout application
+-> Easily get DevOps functionality out of the box
+-> Simply add dependency to your POM file
+-> REST endpoints are automatically added to the application
+-> Endpoints are prefixed with /actuator
+-> Use wildcard * to expsoe all endpoints
+
+
+Running Spring Boot from command line:
+-> server is embedded in JAR file
+-> spring-boot app is self-contained
+-> mycoolapp.jar includes application code and tomcat server
+-> two options:
+   - (1) use java -jar
+   - (2) use spring boot maven plugin: mvnw spring-boot:run
+-> mvnw allows to run a maven project
+-> no need to have maven installed or present on your path
+-> if correct version of maven is not found, it will automatically download
+-> two files provided
+-> mvnw.cmd for windows - mvnw clean compile test
+-> mvnw.sh for linux/mac - ./mvnw clean compile test
+-> if maven is already installed, we can ignore/delete these two files
+-> maven plugin can be used to package executable jar or war archive
+-> ./mvnw package
+-> ./mvnw spring-boot:run

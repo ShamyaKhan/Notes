@@ -1,0 +1,12 @@
+Basic:
+-> styles.css sets up the global style which will apply to entire web application 
+   accross all components
+-> index.html is the main html that will be loaded when someone visits the website
+-> main.ts is the first code file to be executed when the angular application loads up
+   in the browsers of visitors
+-> components are classes that are enhanced by component decorator
+-> angular doesn't automatically scans the files and register components
+-> the idea behind component tree is that those components that are part of the same tree /
+   angular application will be able to work together, exhange data and communicate
+-> call boostrapApplication on one main root component and use other components in that
+   components template or in templates of other nested components

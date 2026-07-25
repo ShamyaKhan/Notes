@@ -1,0 +1,45 @@
+Basic:
+1. A monolithic contains all the logic (routing, middlewares, business logic,
+   database access) to implement all features of the application
+2. A microservice contains all the logic to implement one feature of the application
+3. Each service is entirely self-contained and stand-alone
+4. The biggest problem of microservice is data management/communication between services
+5. Each service gets it's own database (if needed)
+6. One service will never reach into other services database
+
+
+Why database per service?
+1. We want each service to run independently of other services
+2. Database schema/structure might change unexpectedly
+3. Some services might function more efficiently with different types of databases
+4. No dependency between services
+
+
+Communication strategies between services:
+1. Sync: services communicate with each other using direct requests
+2. Async: services communicate with each other using events
+
+
+Sync communication:
+1. Introduces dependency between services
+2. If any inter-service request fails, the overall request will fails
+3. The entire request is only as fast as the slowest operation
+4. Can easily introduce a web of requests
+
+
+Async communication:
+1. When an operation takes place in a service, it will emit an event to the event bus    decribing what just happened
+2. The event bus will route it off to every single sevice so that any service can use
+   the information if needed
+3. Data duplication, extra storage, extra database
+4. A service that only presents data should not handle complex logic about specialized
+   updates of a particular information
+5. The service that created it should handle that and emit a generic event about update
+
+
+
+Dealing with missing events:
+-> If a service is created in future or remains down for some time
+-> Option 1: Make sync requests to other services to get all data of the past
+-> Option 2: Direct access to database of other services to get data
+-> Option 3: Store Events. Whenever any service emits any event, event-bus will store it

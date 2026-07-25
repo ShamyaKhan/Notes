@@ -1,0 +1,7 @@
+I created a mini youtube project which fetches data from youtube data API and displays at homepage. Then If I click onto a videocard, it goes to a watchpage and the video starts playing. In that page, users can comment and reply as well. On the homepage. 
+I implemented debouncing at the search bar where If I write something, the search suggestion API is called after a few milliseconds, not instantly. It reduces the number of  API call significantly.
+Then, I also cached the search result in redux store so that it does not need to make API call for the already searched keyword. 
+
+Lastly, I implemented long polling in live chat section so that it does not bloat up the page and after 20 comments, previous comments are deleted and new comments are stored and displayed 
+
+Can you please help me write this in my resume in 2 lines like a professional

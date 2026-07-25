@@ -1,0 +1,11 @@
+Basics:
+-> In docker, a container is like an isolated computing environment
+-> It contains everything required to run a single program
+
+Why docker?
+-> Running an app makes on local machine big assumptions about the environment such as npm, 
+   node is already installed
+-> It also requires precise knowledge of how to start the app (npm start)
+-> Docker container wraps up everything needed for a program + how to start and run it
+-> Separate container for each individual services
+-> We can create multiple copies of same service

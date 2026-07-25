@@ -1,0 +1,136 @@
+Typescript = Javascript + Type System / Type Annotations
+1. Helps us catch errors during development
+2. Uses 'type annotations' to analyze code
+3. Only active during development
+4. Doesn't provide any performance optimization, no effect on code execution
+
+
+Interface:
+-> Used to define the structure of an object
+
+
+Types:
+1. Type is an way to refer to different properties and methods that a value has
+2. A value is anything we can assign to a variable such as: string, number, boolean, null,
+   undefined, object, function, class, array...
+3. Every value has a type
+4. Primitives: number, boolean, void, undefined, string, symbol, null
+5. Objects: functions, arrays, classes, objects
+
+
+Why do we care about types:
+-> so that the compiler can analye our code for errors
+-> to allow other engineers to understand what values are flowing around our codebase
+
+
+Type Annotation:
+-> code we add to tell typescript what type of value a variable refers to
+-> type annotation for function tells TS what type of arguments a function will    
+   receive and what type of value it will return
+-> when to use:
+-> declare a variable in one line and initialize it later
+-> we want a variable to have a type that cannot be inferred
+-> a function returns any type and we need to clarify the value
+
+Type Inference:
+-> typescript tries to figure out what type of value a variable refers to
+-> if declaration and initialization are on the same line, TS will figure out the type
+-> type inference for function - TS tries to figure out what type of value a function
+   will return
+-> when to use: always
+
+
+Typed Arrays:
+-> each element is some consistent type of value 
+-> TS can do type inference when extracting values from an array
+-> TS can prevent us from adding incompatible values to the array
+-> We can get help with forEach, map, reduce functions
+-> Flexible - can contain multiple different types
+-> Use anytime we need to represent a collection of records with some arbitrary sort order
+
+
+Tuples:
+-> Array-like structure where each element represents some property of a record
+
+
+Interface:
+-> creates a new type, describing the property names and value types of an object
+
+Interface Strategy:
+-> create functions that accept arguments that are typed with interfacec
+-> objects/classes can decide to implement a given interface to work with a function
+
+
+Class:
+-> blueprint to create object with some fields and methods to represent a thing
+-> when we call the constructor of a child class, we have to call the constructor
+   of the parent class as well.
+-> write super() inside the child class constructor
+
+
+Instance Method Modifiers (works same on variables):
+-> public - can be called anywhere anytime
+-> private - can only be called by other methods in this class
+-> protected - can be called by other methods in this class or
+	       by other methods in child classes
+
+
+*** Interface + Class = how we get really strong code reuse in TS
+
+
+
+Type Definition File:
+-> When we use JS library TS cannot figure out the types of data that are flowing 
+   through our appplication
+-> To prevent this, TS has the idea of type definition files
+-> an adapter between TS code and JS library 
+-> tells TS compiler all the modules, functions inside JS library, what type of argument
+   they take and what type of value they return
+-> npm install @types/library_name
+-> index.d.ts 
+
+
+*** We need to make TS understand that there is a global variable
+
+
+Type Guard:
+-> restores access to one of a specific types the set of properties in a union type
+-> typeof (narrow type of a value to primitive type)
+   typeof something === string number boolean symbol
+-> instanceof (narrow every other value that is created with a constructor)
+   something instanceof Array 
+
+
+Abstract Class:
+-> cannot be used to create an object directly
+-> only used as a parent class
+-> can contain real implementation for some methods
+-> the implemented methods can refer to other methods that don't actually exist yet.
+   we still have to provide names and types for the unimplemented methods
+-> can make child classes promise to implement some other method
+
+
+
+Interface vs Inheritence/Abstract class:
+-> interface sets up a contract between different classes
+-> it is used when we have very different objects that we want to work together
+-> it promotes loose coupling
+-> inheritence sets up a contract between different classes
+-> it is used when we are trying to build up a definition of an object
+-> it strongly couples classes together
+
+
+
+Issues to keep in mind:
+-> magic string comparisons
+-> source of data is hardcoded
+-> data array is all strings, even though it might have numbers in it
+-> variable named after a specific team
+-> analysis type is fixed
+-> no ability to output the report in different formats
+
+
+Enum (enumeration):
+-> object that stores closely related values
+-> values can be either number or string
+-> can be used as a type

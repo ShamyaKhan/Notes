@@ -1,0 +1,5 @@
+Basic:
+1. Objects are assigned by reference, primitives are passed by value
+2. Objects: Objects, Arrays, Functions, Dates, RegExps, Maps, Sets, Errors
+3. Primitives: number, string, boolean, null, undefined, symbol, bigint
+4. Falsy check: if(!something) -> null, undefined, false, 0, ''
