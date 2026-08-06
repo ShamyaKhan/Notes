@@ -1,0 +1,173 @@
+Basic:
+-> props is the first parameter of a functional component
+-> import AlexaImage from "./images/alexa.png"
+-> if image size < 10,000 bytes or 9.7Kb then, image raw data is taken and converted into base64 encoded string and gets inlined
+-> otherwise, it is treated as a separate file
+
+Event:
+-> detect a user doing something inside of our app
+-> event handler - function that executes when an event is emitted
+-> anytime we wire up an event handler on a plain jsx element, an event object is always passed in
+
+State:
+-> data that changes as the user interacts with our application
+-> update content on screen (re-render) automatically
+-> only way to change what content react shows
+-> libraries that appear to update content, use the state system behind the scene
+-> when a component re-renders, it's children re-render as well
+-> a single piece of data can server as both props and state
+-> every time a component is rendered, a brand new set of variables are declared
+
+map:
+-> takes every element from an array and passes it to a transformation function and add into a brand new array
+
+HTTP:
+-> think of request-response as text message in a special format
+-> request: 
+  - (i) request line: GET https://api/unsplash.com/images/search HTTP1.1
+  - (ii) headers: Accept-Version: v1, Authorization: Client-ID ABC123
+  - (iii) body
+-> reponse:
+  - (i) status line: HTTP/1.1 200 OK
+  - (ii) headers: Content-Length: 1000, Content-Type: application/json
+  - (iii) body: [{id:"123"}]
+-> headers customize the request in some way or provide additional information to the server
+-> method indicates the general purpose of the request
+
+
+Data Flow:
+-> to share info between sibling components, we always have to involve parent component
+-> to communicate from child up to parent, we need to treat it like an event and pass an event handler down
+
+
+Form:
+-> if you place an input inside a form and press enter key, some automatic behavior of the browser will kick in
+-> browser will cause the form element to trigger a special event called 'submit'
+-> browser will collect all the information inside the form and make a network request with them
+-> this would work even if the user was not making use of javascript at all
+-> why do we use onChange and value property on input element?
+-> to steal control of the value of the input from browser and give it to state system
+
+Updating a list:
+-> state change - swap first two records
+-> need to update html
+-> option 1: remove all existing html tied to this list and recreate them. computationally very expensive
+-> option 2: during initial render, apply a unique key to each element while mapping step. after re-rendering, compare the keys 
+             on each element to the keys from previous render to figure out what changes were made to apply minimal set of
+  	     changes to the existing dom elements.
+
+Controlled Input:
+-> whenever we control any type of form controls (input, radio, textarea) where we provide both value and onChange props
+
+
+Where to define state?
+-> find all the components that need to use this state
+-> define the state in the lowest common parent
+
+How to update arrays or objects inside react applications?
+-> when we create a state, react holds a reference to that current version state
+-> react compares the memory address of arrays and objects that was created as state variables
+-> do not mutate/modify the existing array/object, if so react will not re-render
+-> we need to give react a brand new array or object
+-> otherwise, a bug would appear if we add in optimization that says only re-render this component if the
+   incoming props are different than the last time
+
+How to add, remove Element to an array:
+-> const updatedColors = [...colors.slice(0, index), newColor, ...colors.slice(index)]
+-> const updatedColors = colors.filter((color, index) => color === "green) / colors.filter((color, index) => index !== 5)
+
+How to modify element in an array:
+-> In JS, whenever we create an object, all keys must be unique. if we have duplicate keys, the earlier key will be overwritten
+-> const updateBookById = (id, newTitle) => {
+     const updatedBooks = books.map((book) => {
+       if(book.id === id){
+          return {...books, newTitle }
+       }
+       else{
+          return book
+       }
+    }
+   setBooks(updatedBooks)
+
+  }
+-> const changeColor = (color) => {
+      const updatedFruit = {
+           ...fruits,
+           color: color 
+        }
+     setFruit(updatedFruit)
+  }
+-> const removeColor = () => {
+      const {color, ...rest} = fruit
+      setFruit(rest)
+   }
+
+
+Tricky things around useEffect:
+-> understanding when arrow function gets called
+-> understanding the arrow function's return value
+-> understanding stale variable references
+
+useEffect:
+-> function passed into useEffect always gets called after initial render of after the DOM is updated
+-> on the following renders, that function might be called depending on the dependency array
+-> if we don't put a dependency array, the function will be called after every render
+-> if there are some variables inside dependency array, the function will be called whenever that value of variables changes
+-> we cannot use async await inside the function we pass into
+-> the function we pass into useEffect, we are only allowed to return another function, known as cleanup 
+-> react will hold onto the cleanup function for you and call automatically at some point of time in future
+-> it gets called immediately after second render, just before running the useEffect again
+-> then react creates a brand new cleanup function
+-> it keeps going on like this
+-> the cleanup function is only called if your arrow function is about to be called again
+-> undo something before our next useEffect runs
+-> common when we are watching for events manually on certain elements that are being rendered inside the DOM
+-> commonly used with modal window or dropdown
+
+Context:
+-> a communication channel but redux is all about organization of data
+-> data can be shared across all components
+-> a component can reach out to context and ask for a specific piece of data
+-> create context - returns a context object
+-> it has two properties: provider and consumer. both are react components
+-> provider: component used to specify what data we want to share
+-> consumer: component used to get access to data
+-> <BookContext.Provider value={}> <MyComponent /> </BookContext.Provider>
+-> value prop contains data that will be shared
+-> the components that need to have access this value, we have to put them in between the provider
+-> the custom provider shows the built-in provider
+-> <Provider>App</Provider>
+-> the App component will show up as a prop to the provider called children
+
+Application State:
+-> data that is used by many different components
+-> often a good idea to put into context
+Component State:
+-> data that is used by very few components
+
+
+Hooks:
+-> functions that add additional features to our component
+-> useState: allow a component to use state system
+-> useEffect: allow a component to run code at specific points in time
+-> useContext: allow a component to values stored in context
+-> useCallback: 
+    - tell react your function isn't actually changing over time
+    - fixes bug around useEffect and other similar situations
+    - follows similar conventions as useEffect
+    - works differently in first render and subsequent re-renders
+    - it does not even run your function
+    - at initial render, useCallback does nothing, it returns the function you put in as first argument
+    - if second argument is empty array, it gives you back the original function from first render
+    - if second argument has elements that have changed since last render, it will give you the new version of that function
+
+Custom Hooks:
+-> functions we write to make reusable bits of logic
+
+Stale Variable Reference:
+-> possible bug anytime your useEffect contains or creates a function that refers to a variable
+
+
+Children Prop:
+-> if you create a custom component and place anything inside the pair of tags, that will be taken automatically 
+   and provided as a prop called children

@@ -1,0 +1,83 @@
+Polling:
+-> browser constantly checks the server every few seconds just in case something changed
+-> every time it's a full http request with a bunch of headers to get a tiny response
+
+Protocol:
+-> a set of rules for how two computers communicate
+-> http is a request-response protocol, great for websites, APIs, loading pages
+-> for real-time, we need a protocol that supports a permanent two-way connection
+-> websocket connection stays open, so both client and server can send messages anytime
+-> it is called full duplex, both sides can talk at the same time
+-> server can push updates the instant they happen 
+-> typing indicators, live comments, multiplayer movements, notifications
+-> less expensive because once the connection is open, messages are tiny
+-> efficient for servers because servers do not have to handle thousands of http request opening and closing
+-> rather thousands of websocket connections sit idle
+-> better for mobile because polling wakes up the phone over and over again
+-> a single open connection is easier on battery 
+
+WebSocket Handshake:
+-> starts as a normal http request
+-> then browser adds a special header to upgrade connection to websocket
+-> if server supports, it replies with http101: switching protocols
+-> it creates a websocket tunnel - open, persistent, real-time
+-> websocket has two modes, ws:// unencrypted and wss:// encrypted
+
+
+WebSocket Connection Lifecycle:
+-> it has stages
+-> (I) Connect: 
+  - setup the socket on a specific port
+-> (II) Upgrade/Switch: 
+  - browser sends http get request with a special header to upgrade connection to websocket 
+  - if server supports, it replies with http101: switching protocols
+-> (III) State/Memory: 
+  - http is stateless but websocket is stateful
+  - server holds a reference to your socket in memory
+  - that's how it pushes data instantly
+  - it creates a problem - ghost connection (looses wifi, phone dies, close laptop without properly disconnecting)
+  - the server thinks connection is still alive, it keeps holding the socket in memory
+  - if you don't clean ghost connections, your server eventually dies 
+  - to solve this, websocket uses heartbeat / ping-pong
+  - server sends a tiny ping (heartbeat) and client responds with a pong (acknowledgement)
+  - periodic ping-pong messages ensure the connection remains active and detect dropped connections
+  - if the server stops hearing pong, it terminates the socket
+  - ping-pong is massively lighter, cheaper and easier on battery
+
+
+Data Transfer:
+-> two main types: text (JSON) and binary (raw bytes)
+-> most real-time apps send JSON
+-> typing indicators, new message, score update, notification receive
+-> socket.send(JSON.stringify({userId: 42, status: "typing"}))
+-> binary data is used for audio straming, video frames, multiplayer game states, large payloads
+-> you send raya bytes using ArrayBuffer or Blob
+-> it's faster, smaller, more efficient
+-> how does server know which data type is it?
+-> at low level, websocket uses opcode (a label that says this frame is text/binary/closing/ping-pong)
+
+Backpressure:
+-> what happens if server sends updates like crazy but the client is on a slow internet connection
+-> new messages start piling up in memory
+-> production apps monitor how much data is buffered
+-> if it's too high they slow down the sending rate so the server does not explode
+
+Choosing WebSocket:
+-> socket.io
+  - full management suite on top of websocket
+  - reconnects, rooms, fallbacks, whole package
+  - heavier. if you ship extra client code every message comes with extra overhead 
+  - great for speed-up development
+-> websockets as service tools
+  - pusher, ably
+  - easiest path to production
+-> ws
+  - node js websocket library
+  - fast with minimal overhead
+  - matches browsers websocket API
+
+
+WebSocket State Machine:
+-> actions are only valid in certain states
+-> CONNECTING - OPEN - CLOSING - CLOSED
+-> connect() - send()/receive() - close()

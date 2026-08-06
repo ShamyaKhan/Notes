@@ -198,6 +198,7 @@ Quality Assurance:
 -> focuses on building in quality
 -> for preventing defects
 -> process oriented
+-> for entire life cycle
 
 Quality Control:
 -> actual testing of the software
@@ -206,6 +207,31 @@ Quality Control:
 -> focuses on testing for quality
 -> for detecting defects
 -> product oriented
+-> for testing part in SDLC
 
 Quality Engineering:
-->
+-> write code for automation testing
+-> a team that contains automation testers
+-> also come under QC
+
+
+SDLC:
+-> requirement analysis - design - coding - testing - deployment - maintenance
+
+
+Levels of Software Testing:
+(I) Unit Testing: 
+  - testing a small module/component of the software
+  - white box testing
+  - conducted by developers during coding phase
+  - basis path testing, control structure testing, conditional coverage, loops coverage, mutation testing
+
+(II) Integration Testing:
+  - combining multiple modules/components, check the data flow or communication between them
+
+(III) System Testing:
+  - test overall functionality of the application
+  - each and every requirement is working or not
+
+(IV) User Acceptance Testing:
+  - at last level, testers along with users test the acceptance

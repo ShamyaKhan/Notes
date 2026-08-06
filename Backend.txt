@@ -1,0 +1,54 @@
+How data flow?
+-> request starts from our browser
+-> first it reaches the dns server
+-> in dns server, we define different types of records
+-> A record: points to a particular IP
+-> C record: points to a particular domain name or subdomain
+-> the A record IP address comes from an EC2 instance
+-> our request reaches the EC2 instance through this IP
+-> before it reaches the particular server/computer, it goes through a firewall (AWS native firewall)
+-> the firewall has to allow some kind of request to pass through
+-> in the security group of AWS instance, we have to specify what ports we would allow to be accessible over internet
+-> SSH port (port range 22) to log into AWS instance through terminals or cmd so we can do different kinds of operations
+-> HTTPS (port range 443), HTTP (port range 80) - if we don't allow these two ports, AWS will block it right here
+-> after this, our request reaches the computer/server/aws instance
+-> then we are using reverse proxy
+-> it is a server that sits in front of other servers so that we can manage different types of redirect of config from 
+   a centralized space instead of changing configs in every single server
+-> for that we are using nginx
+-> we are using Certbot to assign SSL certificates automatically
+-> it is listening for port 80 in our AWS instance and redirecting request to port 443 which is an https request
+-> this part is managed by Certbot
+-> what we configure in backend.conf file
+-> server_name { backend_demo.sriniously.xyz 
+-> whatever request comes to this domain our nginx config will redirect those request to localhost:3001
+-> this is the port our node server is running on and this is the final redirection
+-> browser - dns - aws - firewall - aws instance - nginx - localhost:3001
+
+
+
+Why Backend?
+-> any kind of action that deals with data - fetch, receive, persist data
+-> browser fetches the html, css, js files one by one and then it paints our window
+-> once browser fetches the js files, it hydrates all the event listeners for any kind of interactions
+-> the browser is our runtime as it runs all the logic
+-> browser runtimes are often sandbox environments, meaning they are isolated from our operating system
+-> therefore, the code can access only a limited amount of resources
+-> cors is a security policy browsers that restricts JS code to call external APIs, only allowed in the same domain
+-> it makes sense because browser is fetching code from a remote server and executing in the user's browser
+-> if it's not isolated enough, the remote code can access data or files from user's computer
+
+
+Why can't we write backend logic in frontend?
+-> security - browsers are restrictive, often times a backend needs to access file system (write log file, access env variables)
+-> cannot call external APIs unless they have appropriate cors headers, but backend servers often need to connect to other
+   servers and fetch data from multiple sources
+-> databases - server runtime has access to all native database drivers which allows to communicate efficiently with databases
+   these drivers are written to work in environments that can handle socket connections, binary data, maintain persistent
+   connections. browsers cannot do this
+-> backend servers maintain a list of connections, often known as connection pool to our database server so that it does not have
+   to create and destroy connections again and again
+-> they receive thousands of requests per second, so they cannot create and destroy connection with each request, otherwise
+   database server will get overwhelmed and won't be able to handle the load
+-> computing power - frontend applications are everywhere. smartphones, laptops, so the user may not have enough computing power
+   to perform heavy business logic
