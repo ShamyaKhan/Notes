@@ -164,10 +164,96 @@ Hooks:
 Custom Hooks:
 -> functions we write to make reusable bits of logic
 
-Stale Variable Reference:
+Stale Variable Reference (out-of-date):
 -> possible bug anytime your useEffect contains or creates a function that refers to a variable
 
 
 Children Prop:
 -> if you create a custom component and place anything inside the pair of tags, that will be taken automatically 
    and provided as a prop called children
+
+
+Events and State Design Process:
+(I) what states and event handlers are there?
+  - list out what a user will do and changes they will see while using your app
+  - categorize each step as state or event handler
+  - group common steps, remove duplicates, rewrite descriptions
+(II) what name and type?
+  - look at mockup, remove or simplify parts that aren't changing
+  - replace remaining elements with text descriptions
+  - repeat #4 and #5 with a different variation
+  - imagine you have to write a function that returns the text of steps #5 and #6. in addition to your component props,
+    what other arguments would you need?
+(III) where is it defined?
+  - decide where each event handler and state will be defined
+  - does any component besides accordion reasonably need to know which item is expanded?
+  - if other component needs to know that state, define in the lowest common parent
+  - otherwise, define in the component only where it is needed
+  - event handler should be usually defined in the same component as the state it modifies
+
+
+Conditional Rendering:
+-> react does not print booleans, nulls, undefined
+-> In JS, || gives back the first truthy value
+-> In JS, && gives back the first falsey value or the last truthy value 
+
+Inline Event Handlers:
+-> for every iteration of the mapping function
+-> we create a brand new arrow function and pass it off to events such as onClick
+-> usually event handlers receive an event object as the first argument
+-> but if we call event handler manually and pass some argument, those arguments will be received
+
+
+Delayed State Update:
+-> react: oh you want to update state...yeah I'll get around to it in the future
+-> react does not process state updates instantly
+-> the delay is known as batching
+-> react allowing us to make several updates and it will process all those updates at the same time to improve performance
+-> solutions:
+  - (I) get react to process state updates instantly (not ideal, app gets slower)
+  - (II) get access to the most up-to-date value of state (functional update)
+  - use functional update whenever our new update depends on the old value of state (conditional update)
+
+Existence Check Helper:
+-> colors = undefined;
+-> colors.length - cannot read properties of undefined
+-> colors?.length - undefined
+
+
+How to implement click event handler outside the dropdown area so that it closes the dropdown?
+(I) In plain JS:
+  - document-wide click handlers
+  - event capturing/bubbling
+      - when an event occurs, browser wants to find event handlers to call
+      - order in which search occurs is divided into three phases: capture, target, bibble
+  - checking element inclusion
+(II) In react:
+  - useEffect
+  - useRef
+
+Capture Phase:
+-> go to the far most parent of the clicked element, see if it has handlers. go to the second far most parent until the element 
+   that was clicked/interated with (excluding that element)
+-> if it finds the event handler, call it
+-> frequently disabled
+
+Target Phase:
+-> go to the clicked/interacted element, check to see if it has event handlers
+-> if so, it will be called
+
+Bubble Phase:
+-> go to the immediate parent and see if it has event handlers
+-> then go the parent of the parent and see if it has event handlers
+
+-> document.addEventListener('click', handleClick)
+-> if we set event handlers with two arguments, then we will only for event handlers in target phase and bubble phase
+-> document.addEventListener('click', handleClick, true)
+-> it will look for event hanlders in capture phase and target phase
+-> 90% of the time, we want it false
+-> false by default
+
+
+useRef:
+-> allows a component to get a reference to a DOM it creates
+-> 95% of the time used with DOM elements but can hold a reference to any value
+-> it gives us an object with current property that holds the reference
