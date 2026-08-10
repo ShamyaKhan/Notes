@@ -257,3 +257,85 @@ useRef:
 -> allows a component to get a reference to a DOM it creates
 -> 95% of the time used with DOM elements but can hold a reference to any value
 -> it gives us an object with current property that holds the reference
+
+
+Standard Browser Behavior:
+-> when browser loads a new html document, all existing JS variables and code is dumped
+
+
+How Navigation Works in React:
+-> User types our address in
+  - always send the index.html file
+  - when app loads up, look at the address bar and use it to decide what content to show
+-> User clicks a link or presses the back or forward button:
+  - stop the browser's default page switching behavior
+  - figure out where the user was trying to go
+  - update content on the screen and address bar to trick the user into thinking they swapped pages
+ 
+
+Initial Render:
+-> send index.html regardless of what address they are trying to access
+-> html file will have a script tag inside that tells the browser to make a second request and get the bundle.js file
+-> once the browser gets that file, the react application will be executed and start up
+-> the react app will look at the address bar as soon as possible
+-> it will look at the route portion of the address and apply a series of routing rules 
+-> display the appropriate component according to the routes
+
+User is already at our page and clicks some link/button:
+-> intercept the navigation event and prevent browser from doing typical navigation process
+-> handle navigation ourselves using JS code inside of the react app
+-> take a look at where the user was trying to go to
+-> update the address bar so that they think they navigated
+-> apply routing rules once again - display the appropriate component according to the routes
+
+Benefits of navigation in this way:
+-> we are not resetting our javascript environment
+-> when a user goes back to component they saw previously, we can show data that we already fetched instantly 
+   without making another request to outside api
+-> only works if the state is not defined inside the component because by default when a component is removed
+   from the screen, all it's states gets dumped
+-> if we store inside of parent component or a context object, it would be persisted
+
+URL:
+-> doman name:port/path
+-> localhost:3000/user
+-> we only care about the path
+-> window.location.pathname
+
+Changing the Address Bar:
+-> window.location = "http://localhost:3000/dropdown"
+-> causes a full refresh, make a full request, find html, load it up
+-> window.history.pushState({}, '', '/dropdown')
+-> updates the address bar but does not cause a refresh
+
+Handling back/forward button:
+-> window emits a 'popstate' event if the current url was added by pushState method instead of manual typing
+-> clicking on back/forward button will not cause a refresh if the current address I'm at was added with pushState
+-> browser keeps track of history using stack
+-> to detect a user going back/forward we will use popstate event
+-> the only reason we have the state currentPath, setCurrentPath is to cause a re-render when user clicks back/forward button
+
+
+Programmatic Navigation:
+-> trigger navigation from code in response to something that is not directly user driven
+-> banking software - logout after 5 minutes of inactivity
+-> the navigate function will call pushState to update the path inside address bar
+-> it will also update currentPath state
+
+
+Position Absolute:
+-> puts the element at the top left corner of the closest parent with a position other than static  
+-> if no static parent, it will be positioned at the top left corner of the html document
+
+inset-0:
+-> it means top:0 left:0 bottom:0 right:0
+-> if the element is absolute, it will expand to fill the height and width of closest parent with a non-static position
+-> if no static parent, it will expand to fill the entire html document
+
+
+Portal:
+-> changes the way react works
+-> tells react don't place the Modal's html here as a child of the html for ModalPage component
+-> instead, we want to take all the html produced by Modal component and place at some other location inside html document
+-> it gurantees our modal component will never have a positioned parent because it's parent is the body
+-> so it will fill up the entire screen
