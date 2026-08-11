@@ -253,10 +253,36 @@ Bubble Phase:
 -> false by default
 
 
+Why do we need Capture phase to implement Dropdown?
+-> react does not re-render instantly, there is some gap of time
+-> but it takes even longer for the entire bubble phase to be processed
+-> by enabling capture phase, the custom event handler will be executed before react re-renders
+-> because capture phase starts looking for event handlers from the furthest parent element
+-> body - div [custom click event handler running here] [capture phase] 
+-> option div [react click event handler running here] [target phase] 
+-> div - body [bubble phase] 
+
+
+Function to get current time:
+-> performance.now()
+-> number of milliseconds elapsed since you loaded this page
+
+Issues with element references:
+-> document.querySelector(".w-48")
+-> it returns the first element of this class name  
+-> will not work if we show multiple different dropdowns
+-> separate event listener for each dropdown
+-> the root element of each div has a class name of w-48
+-> the click occurred inside of which dropdown
+-> we need to make sure every dropdown has a reference to the html it created
+
 useRef:
 -> allows a component to get a reference to a DOM it creates
 -> 95% of the time used with DOM elements but can hold a reference to any value
 -> it gives us an object with current property that holds the reference
+-> const divElement = useRef()
+-> <div ref={divElement}> </div>
+-> divElement might be null if we do not assign it to any html element
 
 
 Standard Browser Behavior:
@@ -339,3 +365,14 @@ Portal:
 -> instead, we want to take all the html produced by Modal component and place at some other location inside html document
 -> it gurantees our modal component will never have a positioned parent because it's parent is the body
 -> so it will fill up the entire screen
+
+
+Table Requirements:
+-> variable number of rows and columns
+-> number of columns does not have to match with number of properties inside the object
+-> some columns are sortable which can sort different kinds of values
+-> cells can be calculated using multiple properties
+-> cells can display arbitrary data
+-> to make table dynamic, we will pass a second object 'config' that will tell the component how we want to render our table
+-> number of objects inside config will be number of columns inside the table
+-> render function will describe how we will produce the content that is displayed inside each column
