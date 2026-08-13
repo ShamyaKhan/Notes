@@ -163,6 +163,13 @@ Hooks:
 
 Custom Hooks:
 -> functions we write to make reusable bits of logic
+-> function that contains some reusable logic
+
+When to create a custom hook?
+-> find code in a component that is related to one or two piece of state
+-> do not include any jsx
+-> copy paste it all into a helper function in a separate file
+-> fix all the broken references in both files
 
 Stale Variable Reference (out-of-date):
 -> possible bug anytime your useEffect contains or creates a function that refers to a variable
@@ -376,3 +383,57 @@ Table Requirements:
 -> to make table dynamic, we will pass a second object 'config' that will tell the component how we want to render our table
 -> number of objects inside config will be number of columns inside the table
 -> render function will describe how we will produce the content that is displayed inside each column
+
+
+Sorting in JavaScript:
+-> data.sort()
+-> converts elements into string and then sorts
+-> to fix these, we need to add comparator function
+-> data.sort((a, b) => a - b);  // only works for numbers
+-> data.sort((a, b) => a.localeCompare(b))  // only works for strings
+
+
+Fragments:
+-> very simple component that does not have any semantic meaning, it only displays the children
+
+Input Element with Type Number:
+-> even though we type number, event.target.value is a string
+-> to solve it, use parseInt or parseFloat()
+-> if we empty the input box, it will result in NaN, because parseInt("") gives NaN
+-> to solve it, const value = parseInt(event.target.value) || 0
+
+useReducer:
+-> hook for managing state
+-> defines state in a component like useState
+-> changing this state makes component re-render
+-> useful when you have several different closely related states
+-> and future values of future state depend on the current state
+-> use either useState or useReducer inside a single component
+-> const [state, dispatch] = useReducer(reducer, {count: 0, valueToAdd: 0})
+-> by convention, we take all states that are required to make our component work correctly 
+   and combine them together into one single object as opposed to separate variables
+
+
+How useReducer works?
+-> to update state we call dispatch()
+-> when we call dispatch, react will find reducer function and run it
+-> const reducer = (state, action) => {}
+-> the first argument state is whatever the current state of our component is
+-> the value of second argument action is whatever we pass into dispatch (only one argument can be passed)
+-> the reducer function will run and whatever we return from it, will be our new state
+
+
+Rules around reducer function:
+-> whatever you return will be your new state
+-> if you return nothing your state will be undefined
+-> no async/await, no requests, no promises, no outside variables
+-> do not modify the state object in any way
+-> when reducer function runs, the only information it has access to are the arguments (state, action)
+
+
+How to tell dispatch which state to update?
+-> when we call dispatch, we need to pass along some info to tell the reducer how the state should be updated
+-> we will always pass an action object
+-> it will have a 'type' property that is a string. it will tell reducer which state to update
+-> if we need to communicate some data, it will placed in the 'payload' property of the action object
+-> 
