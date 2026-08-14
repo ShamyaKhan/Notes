@@ -429,6 +429,7 @@ Rules around reducer function:
 -> no async/await, no requests, no promises, no outside variables
 -> do not modify the state object in any way
 -> when reducer function runs, the only information it has access to are the arguments (state, action)
+-> we have only one reducer function
 
 
 How to tell dispatch which state to update?
@@ -436,4 +437,78 @@ How to tell dispatch which state to update?
 -> we will always pass an action object
 -> it will have a 'type' property that is a string. it will tell reducer which state to update
 -> if we need to communicate some data, it will placed in the 'payload' property of the action object
--> 
+
+Some Design Considerations:
+-> try to put most of the logic inside of reducer function and keep the dispatch cleam
+-> one of the goals of reducers is to have a very specific set of ways that state can be changed
+
+
+Immer:
+-> a library that lets you write code to directly mutate state
+-> you do not have to return state 
+-> still return in each case, otherwise you get fallthrough
+
+
+Redux:
+-> a library for managing state using the same techniques as useReducer
+-> we create a separate 'store' to create and maintain our states
+-> components can connect to the store and access state
+-> redux library does not assume you are using react
+-> react-redux library helps communicate between react and redux sides of your project
+-> multiple reducer functions, each managing a different part of a state
+-> split up the responsibility of managing state inside of our application
+
+
+Why are redux and useReducer very popular?
+-> the dispatch function pattern
+-> whenever we want to change our state in any way, we have to call dispatch function
+-> central point of changing any state
+-> understanding why state is updating and what component is triggering the update
+-> easy to add-in additional debugging features
+-> downside: reducer function has to be told why it is being executed 
+   and what state updates it needs to make (action.type)
+
+
+Redux Toolkit:
+-> wrapper around plain redux
+-> specifically simplifies the action type creation process
+
+
+Redux Store:
+-> store is an object that holds all of our states for our entire application
+-> usually the react-redux library will interact with or handle the store for us
+-> to manually interact with store, dispatch an action store.dispatch({type: "song/addSong", payload: "new song"})
+-> to see what state exists in the store, console.log(store.getState())
+-> the keys of the big state object are set when the store is created
+-> the values of the keys are produced by individual reducers that are loaded in the store
+-> const store = configureStore({reducer: {songs: songsSlice.reducer}})
+
+Redux Slice:
+-> slices automatically create reducers and action types
+-> slices do three things
+-> defines some initial state
+-> combines mini-reducers into a big reducer
+-> creates a set of 'action-creator' functions
+-> slices save from having to write out all this boilerplate (action types, switch statements, cases)
+-> when we define a slice, we write out a set of mini-reducer functions on that reducers property
+-> you can view each of these functions as individual case statement inside of a larger switch statement
+-> the slice has a property called reducer which combines all the individual reducers
+-> this combined reducer is loaded into the redux store
+-> each mini-reducer function is responsible for a particular state update
+-> the mini-reducers use immer library so we can mutate state
+-> how does the big reducer know which mini-reducer function to run?
+-> the slice will take the name of the slice, add a forward slash and the name of the function
+-> const songsSlice = createSlice({name: "song", initialState: []}, reducers: {addSong(state, action){}})
+-> song/addSong
+-> the state argument inside mini-reducer function is the piece of state managed by this reducer
+
+
+Action Creators:
+-> functions that create action types automatically for us so we don't have to memorize the pattern
+-> the createSlice function will take a look at the names of all mini-reducer functions
+-> then it will create a new object that contains functions for each reducer function with the same name
+-> when called, these functions return an action which we can dispatch immediately
+-> saves us from having to write out action objects
+-> {addSong(payLoad){return {type: "song/addSong", payload: payload}}}
+-> console.log(songsSlice.actions.addSong("new song"));
+-> store.dispatch(songsSlice.actions.addSong("new song"))
