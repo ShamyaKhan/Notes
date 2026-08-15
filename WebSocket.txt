@@ -81,3 +81,47 @@ WebSocket State Machine:
 -> actions are only valid in certain states
 -> CONNECTING - OPEN - CLOSING - CLOSED
 -> connect() - send()/receive() - close()
+-> 0. Connecting: handshake is still happening, don't send yet
+-> 1. Open: the tunntel is live, you can send
+-> 2. Closing: connection is shutting down, stop pushing data
+-> 3. Closed: it's dead, time to reconnect, check using socket.readyState()
+
+
+Server-side Events:
+-> On server you're host, listening for clients joining, sending data, disconnecting, crashing
+-> your starting/entry point is the connection
+-> you declare a new wss.on connection function and within it you can have all information about what's happening
+   with the socket and the requests coming in, new clients joining in
+-> message. it's the incoming data that usually arrives as buffer
+-> connection, message, error, close
+
+
+Client-side Events:
+-> open. it means the handshake worked and now you're connected and it's safe to send
+-> message. you receive server updates, you can parse incoming data and display it
+-> close. it means disconnected
+-> newWebsocket creates its own internal http server just for handshake
+-> newWebsokcet, onopen, onmessage, onerror, onclose
+
+
+
+const wss = new WebSocketServer({ port: 8080 });
+-> creates its own internal http server just for upgrade handshake
+-> it is a http server, knows as zombie http server
+-> once it sees a valid websocket connection, it handles the logic and holds the tcp connection open
+-> in production, instead of passing a port, you usually attach ws to an existing express or fastify 
+   server so they can share the same port
+-> one port, two protocols
+
+
+wss.on("connection", (socket, request) => {})
+-> connection event
+-> it will fire after the 101 handshake is verified
+-> socket will contain the individual connection to one client
+-> request will contain the headers such as cookies, ip address from the upgrade request
+-> even though we switched protocols, we can still see the original http request data
+
+
+socket.on("message", (rawData) => {})
+-> wait for messages
+-> get access to list of all currently active socket objects
