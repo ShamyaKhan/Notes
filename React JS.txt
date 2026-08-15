@@ -504,7 +504,7 @@ Redux Slice:
 
 
 Action Creators:
--> functions that create action types automatically for us so we don't have to memorize the pattern
+-> functions that create action objects with type automatically for us so we don't have to memorize the pattern
 -> the createSlice function will take a look at the names of all mini-reducer functions
 -> then it will create a new object that contains functions for each reducer function with the same name
 -> when called, these functions return an action which we can dispatch immediately
@@ -512,3 +512,35 @@ Action Creators:
 -> {addSong(payLoad){return {type: "song/addSong", payload: payload}}}
 -> console.log(songsSlice.actions.addSong("new song"));
 -> store.dispatch(songsSlice.actions.addSong("new song"))
+-> console.log(songsSlice.actions), an object that contains all the action creators
+
+
+React-Redux:
+-> a library that connects react with redux
+-> the key part of this library is the Provider component
+-> when we create this provider we pass in our redux store to it
+-> it uses context system to make the store available to all components inside of our application
+
+
+state:
+-> inside of a slice file, in a reducer function, state means the piece of state it manages
+-> everywhere else, state means the whole state object in the store
+
+*** reducers are functions that change the state in some particular way
+*** useDispatch uses context system to reach up to the provider at the top of component hierarchy
+    and get access to the dispatch function from the redux store
+
+Updating state from a component:
+-> when a user does something, call the action creator to get an action object
+-> then dispatch it
+-> dispatch(addSong(song))
+
+Accessing state in a component:
+-> call the useSelector hook, pass in a selector function
+-> useSelector((state) => state.songs);
+
+
+Changing state:
+-> add a reducer function to one of your slices to change the state in some way
+-> export the action creator that the slice automatically creates
+-> from the component, call the action creator to get an action object and then dispatch it
