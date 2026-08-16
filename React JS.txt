@@ -487,12 +487,12 @@ Redux Slice:
 -> slices automatically create reducers and action types
 -> slices do three things
 -> defines some initial state
--> combines mini-reducers into a big reducer
+-> combines mini-reducers into a big reducer function
 -> creates a set of 'action-creator' functions
 -> slices save from having to write out all this boilerplate (action types, switch statements, cases)
 -> when we define a slice, we write out a set of mini-reducer functions on that reducers property
 -> you can view each of these functions as individual case statement inside of a larger switch statement
--> the slice has a property called reducer which combines all the individual reducers
+-> the slice has a property called reducer which combines all the individual reducer functions
 -> this combined reducer is loaded into the redux store
 -> each mini-reducer function is responsible for a particular state update
 -> the mini-reducers use immer library so we can mutate state
@@ -501,18 +501,27 @@ Redux Slice:
 -> const songsSlice = createSlice({name: "song", initialState: []}, reducers: {addSong(state, action){}})
 -> song/addSong
 -> the state argument inside mini-reducer function is the piece of state managed by this reducer
+-> a reducer function cannot see or access the state of another slice
+-> it can only manage and work with the state of it's own
 
 
 Action Creators:
 -> functions that create action objects with type automatically for us so we don't have to memorize the pattern
 -> the createSlice function will take a look at the names of all mini-reducer functions
 -> then it will create a new object that contains functions for each reducer function with the same name
--> when called, these functions return an action which we can dispatch immediately
+-> when called, these functions return an action object which we can dispatch immediately
 -> saves us from having to write out action objects
 -> {addSong(payLoad){return {type: "song/addSong", payload: payload}}}
 -> console.log(songsSlice.actions.addSong("new song"));
 -> store.dispatch(songsSlice.actions.addSong("new song"))
 -> console.log(songsSlice.actions), an object that contains all the action creators
+
+
+Action and Dispatch:
+-> the combined reducer function's job is to take a look at the incoming action and see if it has a type that
+   matches up with a mini-reducer function
+-> whenever we call dispatch, the action object is sent to every combined reducer in the store
+-> and the combined reducer functions are called
 
 
 React-Redux:
@@ -544,3 +553,43 @@ Changing state:
 -> add a reducer function to one of your slices to change the state in some way
 -> export the action creator that the slice automatically creates
 -> from the component, call the action creator to get an action object and then dispatch it
+-> when working with redux, we want minimize the number of dispatch calls
+-> try not to make more than one dispatch call inside a single event handler
+
+
+How to watch for additional action types in a slice?
+-> extraReducer(builder){}
+-> when the slice is created, this extraReducer function will be called and be giceb a builder object
+
+How to create action creator manually?
+-> const something = createAction("something"); 
+
+
+Derived State:
+-> values that we can calculate using existing state
+
+
+Redux Store Design:
+-> identify what state exists in the app
+-> identify how the state changes over time
+-> group together common pieces of state
+-> create a slice for each group
+
+
+File and Folder Structure:
+-> organize by function
+-> organize by feature
+-> redux recommends a feature approach
+-> feature approach frequently does not work well with redux toolkit
+-> an issue called circular imports
+-> allowing components to import from slice files gets really messy
+-> create an index.js file to server as central interface point for everything related to redux
+-> it will import action creators and re-export them immediately
+-> it will help solve the circular import issue
+
+
+Eager Over-fetching:
+-> at app startup, fetch all data we would ever need
+
+Lazy Fetching:
+-> only fetch data immediately before it is needed
