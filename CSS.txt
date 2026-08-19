@@ -1,0 +1,42 @@
+CSS:
+-> a stylesheet language used to apply styles to html elements
+-> allows to control the layout, colors, fonts and overall visual appearance of a webpage without altering the html structure
+-> the primary purpose of CSS is to separate the presentation of a document from its content
+-> contributes to responsive web design by allowing adjustments to layout and styling based on device screen size
+-> the cascading nature of CSS means it allows styles to be inherited or overridden in a hierarchical manner
+
+
+CSS Rule:
+-> made up of two main parts - selector and declaration block
+-> selector { poperty: value }
+-> a selector is a pattern to identify and target specific html elements
+-> type selector, class selector, id selector
+
+
+Viewport:
+-> <meta name="viewport"> gives instructions to browsers on how to control the page's dimensions and scaling on different devices
+-> width=device-width tells the browser to match the page width to the device's screen width
+
+
+Default Browser Styles / User-Agent Styles:
+-> provides basic formatting to ensure html elements are displayed in a readable way across all browsers
+
+
+Width and Height:
+-> controls the dimensions of an element on a webpage
+-> can be defined in px, %, vw, vh and more
+-> if you do not specify the width and height, they will be set to auto
+-> it lets the browser determine the element's width and height based on its content, parent and display type
+-> for a div, width: auto makes it expand to fill the full width of its parent container
+
+
+Pixel:
+-> fixed size unit of measurement
+-> provides precise control over dimension
+
+
+Combinators:
+-> defines the relationship between selectors
+-> help select elements based on their relationship to other elements
+-> allows for more precise and efficient styling
+-> descendant combinator (space), child combinator (>), next-sibling combinator (+), subsequent-sibling combinator (~)
