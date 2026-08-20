@@ -5,22 +5,18 @@ CSS:
 -> contributes to responsive web design by allowing adjustments to layout and styling based on device screen size
 -> the cascading nature of CSS means it allows styles to be inherited or overridden in a hierarchical manner
 
-
 CSS Rule:
 -> made up of two main parts - selector and declaration block
 -> selector { poperty: value }
 -> a selector is a pattern to identify and target specific html elements
 -> type selector, class selector, id selector
 
-
 Viewport:
 -> <meta name="viewport"> gives instructions to browsers on how to control the page's dimensions and scaling on different devices
 -> width=device-width tells the browser to match the page width to the device's screen width
 
-
 Default Browser Styles / User-Agent Styles:
 -> provides basic formatting to ensure html elements are displayed in a readable way across all browsers
-
 
 Width and Height:
 -> controls the dimensions of an element on a webpage
@@ -29,14 +25,68 @@ Width and Height:
 -> it lets the browser determine the element's width and height based on its content, parent and display type
 -> for a div, width: auto makes it expand to fill the full width of its parent container
 
-
 Pixel:
 -> fixed size unit of measurement
 -> provides precise control over dimension
-
 
 Combinators:
 -> defines the relationship between selectors
 -> help select elements based on their relationship to other elements
 -> allows for more precise and efficient styling
 -> descendant combinator (space), child combinator (>), next-sibling combinator (+), subsequent-sibling combinator (~)
+
+Block Elements:
+-> take up the full width available to them
+-> stretch across the width of their container
+-> start on a new line and push other contents to the next line
+-> div, p, headings, ol, ul, section
+-> sizes can be controlled
+
+Inline Elements:
+-> take up as much width as they need
+-> do not start on a new line
+-> flow within the content
+-> sizes cannot be controlled
+-> span, a, img
+
+Inline-block Elements:
+-> remain in the text flow without starting on a new line
+-> sizes can be adjusted
+
+Margin:
+-> controls the space outside an element
+-> helps define the layout structure and separate from other elements
+
+Padding:
+-> controls the space inside an element
+-> improves content readability and aesthetic appeal
+
+Specificity:
+-> determines which styles are applied to an element when rules could apply
+-> calculated based on the type of selectors used
+-> highest: inline style applied through style attribute
+-> next, id selectors
+-> next, class selectors, attribute selectors and pseudo classes
+-> next, type selectors and pseudo elements
+
+Universal Selector (*):
+-> matches any element in the document
+-> lowest specificity
+
+important Keyword
+-> !important
+-> gives a style rule the highest priority, overriding any other declarations for a property
+-> used after the css value and before the semicolon
+
+Cascading Algorithm:
+-> the process browser uses to decide which css rules to apply when there are multiple styles targeting the same element
+-> ensures that most appropriate styles are used based on  a set of well defined rules
+-> begins with relevance
+-> then considers origin and importance
+-> next looks at specificity
+-> finally order of appearance comes into play
+
+Inheritance:
+-> color, font-family, line-height are inherited by default
+-> margin, padding, border, background are not inherited by default
+-> if you want a child element to inherit these styles, you need to use inherit keyword
