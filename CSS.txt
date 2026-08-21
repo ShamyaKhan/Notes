@@ -90,3 +90,6 @@ Inheritance:
 -> color, font-family, line-height are inherited by default
 -> margin, padding, border, background are not inherited by default
 -> if you want a child element to inherit these styles, you need to use inherit keyword
+
+Link States:
+-> link, visited, hover, focus, active
