@@ -796,3 +796,17 @@ Fine-grained Tag Validation:
 -> define providesTags property as a function, that returns an array with an object inside of it
 -> that function is called automatically with some arguments which are: result, error, arg
 -> the third argument (arg) is whatever you passed to your hook when you called it inside of a component
+
+
+React Router:
+-> Browser Router - an object that watches the path in the address bar
+-> path is everything after the domain name and port
+-> root layout - shows components that are common to each page
+-> in order to display the component that the browser router has selected for us to show, use <Outlet />
+-> it reaches up to the browser router through context system and says that is the currently selected component
+-> the browser router will the outlet and it will simply display
+
+Data fetching with react router:
+-> loader functions
+-> these functions will be passed off to browser router
+-> whenever we are about to display a page, the browser router will call the appropriate loader function for us
