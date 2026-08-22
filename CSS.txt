@@ -93,3 +93,20 @@ Inheritance:
 
 Link States:
 -> link, visited, hover, focus, active
+
+Pseudo Class:
+-> a keyword added to a selector that specifies a special state of that element
+
+Background Image:
+-> background-size, background-repeat, background-position, background-attachment
+-> background: center top fixed url("")
+
+Gradient:
+-> a smooth transition between two or more colors
+-> linear gradient and radial gradient
+-> linear gradient transitions color along a straight line
+-> background: linear-gradient(direction, color-stop1, color-stop2, ...)
+-> linear-gradient(to right, red, yellow)
+-> radial gradient transitions colors from an origin (usually the center) outward in a circular or elliptical shape
+-> background: radial-gradient(shape size at position, color-stop1, color-stop2, ...)
+-> radial-gradient(circle closest-side at corner, red, yellow 50%, green)
