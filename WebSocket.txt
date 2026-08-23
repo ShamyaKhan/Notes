@@ -82,7 +82,7 @@ WebSocket State Machine:
 -> CONNECTING - OPEN - CLOSING - CLOSED
 -> connect() - send()/receive() - close()
 -> 0. Connecting: handshake is still happening, don't send yet
--> 1. Open: the tunntel is live, you can send
+-> 1. Open: the tunnel is live, you can send
 -> 2. Closing: connection is shutting down, stop pushing data
 -> 3. Closed: it's dead, time to reconnect, check using socket.readyState()
 
@@ -115,13 +115,61 @@ const wss = new WebSocketServer({ port: 8080 });
 
 
 wss.on("connection", (socket, request) => {})
--> connection event
+-> connection event, it is the first event
 -> it will fire after the 101 handshake is verified
 -> socket will contain the individual connection to one client
 -> request will contain the headers such as cookies, ip address from the upgrade request
 -> even though we switched protocols, we can still see the original http request data
 
-
 socket.on("message", (rawData) => {})
 -> wait for messages
 -> get access to list of all currently active socket objects
+
+wss.clients.forEach((client) => {})
+-> iterate over each client and push data to everyone
+
+if(client.readyState === WebSocket.OPEN){client.send('server broadcast')}
+-> make sure you are talking to open clients
+
+const socket = new WebSocket('ws://localhost:3000')
+-> connecting to the local websocket server
+
+socket.onmessage = (event) => {console.log('Message from server', event.data)}
+-> listening to broadcast
+
+socket.onopen = () => {socket.send('Hello from chrome console')}
+-> send a test shout when the tunnel is open
+
+wscat -c ws://localhost:3000
+-> curl for websocket
+-> a client-side tool to test connectivity
+
+
+How to connect to a websocket:
+(I) Initiate the handshake
+-> const socket = new WebSocket('ws://localhost:3000')
+-> the moment it executes, browser creates a TCP connection with the server
+-> sends an http get request with an upgrade websocket
+-> and waits for 101 switch protocol response
+-> the connection is not ready yet
+-> the socket exists immediately but it's not usable until the open event fires
+
+
+Why use socket.addEventListener() instead of socket.onmessage() or something like that?
+-> addEventListeners allow for multiple listeners
+-> socket.onsomething only allows for one
+-> you often want multiple independent reactions like logging, analytics, UI updates on the same web event
+-> websockets are event-driven, not request-driven
+-> socket.addEventListener("open", () => {}) event fires only once when the http websocket upgrade succeeds
+-> the protocol is officially switched and tunnel established
+-> this is the first safe moment to call socket.send()
+-> socket.addEventListener("open", () => {}) is fired when server intentionally closes the connection or 
+   network drops or socket.close() is called
+-> once closed,  the socket can never re-open again
+-> socket.addEventListener("message", (event) => {}) is fired everytime the server pushes data to the client
+-> the server decides when messages arrive
+-> event.data can be string, most commonly json or a blob or an array buffer
+
+
+** once open log appears, http protocol has been deleted from memory
+** you are communicating through persistent TCP stream
