@@ -810,3 +810,9 @@ Data fetching with react router:
 -> loader functions
 -> these functions will be passed off to browser router
 -> whenever we are about to display a page, the browser router will call the appropriate loader function for us
+
+
+Higher Order Component:
+-> a react component made to reuse code
+-> a tool to de-duplicate code
+-> component + higher order component = enhanced or composed component (additional functionality or data)
