@@ -173,3 +173,58 @@ Why use socket.addEventListener() instead of socket.onmessage() or something lik
 
 ** once open log appears, http protocol has been deleted from memory
 ** you are communicating through persistent TCP stream
+
+
+Socket Patterns:
+-> in production, the real skill is designing the message flow
+-> when you write socket.send(""), you're sending a blind packet
+-> the server receives it and it has zero context
+-> is this about a chat message, a typing event, a command or a delete request
+-> we fix that with structure
+
+
+Envelope Pattern:
+-> in real-time apps, you don't send raw strings
+-> you send a message that includes intent
+-> {
+     type: "CHAT_MESSAGE",
+     id: "uuid-123",
+     payload: { text: "Hey everyone", roomId: "general" },
+     metadata: { sentAt: "1705622400" }
+   }
+
+-> type tells the server what login to run
+-> id lets you track the message
+-> payload is the actual data
+-> metadata includes optional context
+-> now your server becomes a switchboard
+-> it looks only at one field and instantly routes the action
+-> as soon as you parse the message, you open up a literal JS switch statement, check the type and depending on it, 
+   you immediately handle within your application
+
+-> socket.on("message", (raw) => {
+     const msg = JSON.parse(raw.toString())
+     switch(msg.type){
+     	case "CHAT_MESSAGE":
+	   return handleChatMessage(msg.payload)
+	case "TYPING":
+	   return handleTyping(msg.payload)
+	case "JOIN_ROOM":
+	   return handleJoinRoom(msg.payload)
+	default:
+	   console.log("Unknown Type", msg.type)
+     }
+   })
+
+
+Two ways to structure envelope:
+(I) Type based commands
+-> best when your app has a known list of actions
+-> perfect for chat apps, dashboard, collaborative tools
+(II) Topic based messages
+-> pub sub style
+-> best when channels are dynamic
+-> perfect for sensors, tickers, live markets and sports engines 
+
+
+# Once the structure is solved, you have to choose a format. JSON or binary
