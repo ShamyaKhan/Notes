@@ -1,0 +1,30 @@
+Props:
+-> interface to define what props a child expects to receive
+-> two big checks by TS:
+  - are we providing the correct props to child when we show it in parent?
+  - are we using the correctly named + typed props in child?
+
+
+Explicit Component Type Annotation:
+-> TS does not understand that we are defining a react component
+-> all react components can optionally provide these properties: propTypes, displayName, defaultProps, contextTypes
+-> TS does not know we are making a react component, so it thinks that child will not have these properties
+-> export const Child: React.FC<ChildProps> = ({ color }) => {};
+-> Child will be a react component
+-> Child might have properties assigned to it like propTypes and contextTypes
+-> Child will receive props of type ChildProps
+
+
+Type Inference with State:
+-> whenever you define a new state with useState hook, TS will infer the type of state based on the default value
+-> type inference does not work on empty array or empty object
+-> const [guests, setGuests] = useState<string[]>([]);
+
+
+Generic Types:
+-> put in a set of angle brackets and write out all different possible types
+
+
+Typing Standalone Event Handlers:
+-> type inference is not applied if we define the event handler function ahead of time
+-> type inference is only applied to event handlers if we define it inline
