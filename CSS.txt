@@ -110,3 +110,38 @@ Gradient:
 -> radial gradient transitions colors from an origin (usually the center) outward in a circular or elliptical shape
 -> background: radial-gradient(shape size at position, color-stop1, color-stop2, ...)
 -> radial-gradient(circle closest-side at corner, red, yellow 50%, green)
+
+Layout:
+-> how the visual elements are arranged on a page or screen to communicate a message
+-> it's like the blueprint of a design
+-> designers consider the placement, size and hierarchy of each element
+
+Alignment:
+-> how elements are placed in relation to one another
+-> designers align elements along imaginary lines, edges or a central point
+
+Composition:
+-> the art of arranging elements to create a harmonious design
+-> it determines how elements like images, text and shapes relate to each other and contribute to the design in an artistic way
+-> it considers the artistic impact on overall design
+
+Balance:
+-> how the visual weight is distributed within a composition
+-> designers aim to create an equilibrium through symmetrical or asymmetrical arrangements
+
+Hierarchy:
+-> it establishes the order of importance of the elements in a design
+-> it's about making sure the most important information is noticed first
+-> you can implement a visual hierarchy with size, color, contrast, alignment, whitespace and even typography
+-> guides the viewers attention in a specific order 
+
+User Interface:
+-> how humans interact with computers
+-> includes visual and interactive elements that users can see on their screen
+
+User Experience:
+-> how users feel when using a product or service
+
+Progressive Enhancement:
+-> a design approach that ensures all users regardless of browser or device, can access the essential content and
+   functionality of an application
