@@ -8,6 +8,7 @@ Protocol:
 -> for real-time, we need a protocol that supports a permanent two-way connection
 -> websocket connection stays open, so both client and server can send messages anytime
 -> it is called full duplex, both sides can talk at the same time
+-> persistent full duplex tunnel
 -> server can push updates the instant they happen 
 -> typing indicators, live comments, multiplayer movements, notifications
 -> less expensive because once the connection is open, messages are tiny
@@ -227,4 +228,113 @@ Two ways to structure envelope:
 -> perfect for sensors, tickers, live markets and sports engines 
 
 
-# Once the structure is solved, you have to choose a format. JSON or binary
+Data Transfer Format:
+-> Once the structure is solved, you have to choose a format. JSON or binary
+-> Text (JSON) or Binary (raw bytes)
+-> JSON is the default, easy, readable, debuggable, flexible and best choice for most apps
+-> you want to use binary when messages are of a high frequency 
+-> such as GPS updates, mouse movements, audio chunks, game states
+-> instead of sending readable texts, you send raw bytes because it takes less bandwidth and latency
+-> most serious apps actually use both
+-> JSON for control messages, join, auth, commands
+-> and binary for high speed data such as movement, audio, sensors
+-> when you make the connection and decide which format, you have to move from message structure to message routing
+
+
+Message Sending Patterns:
+(I) Broadcast (one to all):
+-> one message goes to every single connected client
+-> use case: system announcements, global alerts, service status updates
+(II) Unicast (one to one):
+-> this is a DM. only one person gets the message
+-> you keep a registry where you connect a specific user id to socket
+-> without that you would be looping through every client just to find one
+-> with a map lookup is instant
+-> use case: private messages, user notifications, admin actions
+(III) Multicast (one to many):
+-> often used to send messages to specific groups
+-> it's a group chat pattern, you only send to a specific room
+-> use case: dsicord channels, game lobbies, live event chats, collaborative documents
+
+
+Ackowledgements:
+-> websockets are fast, but they are also fire and forget
+-> unlike http, there are no 200 automatic OK
+-> for critical actions, you add ACKs
+-> you send a message with an id, the server processes it and replies with the same id as a receit 
+-> if a client does not get the receit in time, retry
+-> that's how you add reliability on top of websockets
+
+
+Pub/Sub Pattern:
+-> it's like subscribing to a newspaper
+-> you only receive what you actually care about
+-> the real challenge is scaling
+-> when you have multiple servers, each server only knows its own clients
+-> if server 1 publishes an update, server 2 won't know about it
+-> to solve this, real systems use message broker
+
+
+Message Broker:
+-> redis
+-> the broker becomes the central broadcast layer between all servers
+-> that's how you scale to millions of connections
+
+
+WebRTC:
+-> for voice, video and P2P
+-> for heavy media like video calls, routing everything through server is expensive and slower
+-> web RTC lets two browsers talk directly peer-to-peer with ultra low latency
+-> perfect for audio and video
+-> only catch is web RTC needs a matchmaking phase
+-> two browsers need a way to find each other and exchange connection information
+-> that step is called signaling. it is done with websockets
+-> the flow will look like this:
+-> client A connects to a websocket server and sends an offer for client B
+-> client B replies with an answer
+-> once they've exchanged network details webRTC connects them directly peer-to-peer
+-> the server steps out, media flows directly
+-> that's why zoom uses websocket for signaling, chat and join events, but then webRTC for audio/video streaming
+
+
+WebTransport:
+-> for ultra low latency streaming
+-> what if peer-to-peer is not possible
+-> high fps cloud gaming, live media pipelines, competitive RT systems
+-> websockets are built on TCP, one of the primary ways in which we transmitd data on internet
+-> TCP has a downside, if one packet gets lost, everything pauses until its resent
+-> that's called head-of-line blocking
+-> WebTransport fixes this by using http3, powered by QUIC
+-> instead of one stream that can freeze, it supports multiple independent streams over a single connection
+-> so if one stream gets delayed, the others keep moving
+-> that means fewer freezes and smoother real-time delivery
+-> unless you're building something insanely latency sensitive, you should stick with websocket
+
+
+Server-Sent Events:
+-> sometimes even websockets are actually overkill
+-> if your app only needs one way updates like stock prices, news feeds, live dashboards then SSE is a cleaner tool
+-> its basically server pushes updates and client listens
+-> no two way messaging, no full-duplex tunnel, just one way stream over http
+-> lightweight, simple, reconnects automatically
+
+
+When do you use what?
+-> WebSockets: two way real time apps
+    -chat, collaboration, dashboards
+-> WebRTC: heavy media, peer-to-peer 
+    -voice calls, video calls, file transfers
+-> WebTransport: ultra low latency streaming
+    - high performance, real-time systems
+-> SSE: one way server updates
+    - tickers, feeds, streaming data
+
+
+Real-time systems need to have:
+-> stable networking
+-> persistent execution
+-> predictable performance
+
+
+-> some platforms are optimized for serverless or short-lived requests
+-> it can introduce issues like cold starts, sleeping instances, connection limits, usage caps
