@@ -111,6 +111,25 @@ Gradient:
 -> background: radial-gradient(shape size at position, color-stop1, color-stop2, ...)
 -> radial-gradient(circle closest-side at corner, red, yellow 50%, green)
 
+Absolute Units:
+-> fixed-size unit of measurement. not relative to anything else
+-> pixel (px)
+-> 1 pixel = 1/96 inch
+-> use when you need precise control over element dimensions, spacing, and layout
+
+Percentages:
+-> a relative unit that allow yous to define sizes, dimensions and other properties as a proportion of their parent element
+-> it essentially means, make this X% of its container
+-> ideal for creating fluid layouts that adapt to different screen sizes
+-> using for flexible images is another common practice
+-> less common but can also be used for font sizes to create scalable typography
+-> particularly handy for vertical centering
+
+
+
+
+
+
 Layout:
 -> how the visual elements are arranged on a page or screen to communicate a message
 -> it's like the blueprint of a design
@@ -145,3 +164,69 @@ User Experience:
 Progressive Enhancement:
 -> a design approach that ensures all users regardless of browser or device, can access the essential content and
    functionality of an application
+
+User Centered Design:
+-> a web development approach that prioritizes the end user, from their needs to their preferences and limitations
+-> the goal is to craft a web page that is intuitive, efficient to use and pleasing for users to interact with
+-> one of the first aspects is considering your target demographics
+-> another aspect is consider the goal of end users
+-> user behavior is an important factor, you'll want to leverage an analytics tool like google analytics
+-> a key to user-centered design is to actually involve users, providing a feedback chanel
+
+User Research:
+-> systematic study of the people who use your product
+-> goal is to measure user needs, behaviors and pain points
+-> NPS - Net Promoter Score
+-> measures how likely are users to recommend your product to a friend
+-> measured through survey
+-> another research vector is exit interview
+-> a survey to show your users when they cancel a subscription or delete an account
+-> it can give you insights into the factors causing user churn, so you can address them
+
+User Testing:
+-> the practice of capturing data from users as they interface with your application
+-> a video game going through a beta testing
+-> in case of web development, there is A/B testing
+-> involves shipping a new feature to a randomly selected subset of your user base
+-> then you can leverage analytics data to determine if the feature is beneficial
+
+User Requirements:
+-> stories or rubrics that your application needs to follow
+-> might be defined by user research or industry standards or stakeholder input
+-> requirements maybe functional or non-functional
+
+Progressive Disclosure:
+-> a design pattern used to only show users relevant content based on their current activity and hide the rest
+-> it's done to use cognitive load and make the user-experience more intuitive
+
+Lazy Registration:
+-> a UI design pattern that allows users to browser and interact with your application without having to register
+-> users need to see the value your site offers before willing to provide their information
+
+Design Brief:
+-> a document that outlines the objectives, goals and requirements of a project
+-> a roadmap that guides the design process ensures that the final product meets the needs of the client
+-> usually the client will write the design brief and it will serve as a working draft
+-> key elements:
+   - overview of the project and business
+   - document the goals and objectives
+   - target audience: target demographics, interests, needs
+   - project scope: deliverables, timeline, budget
+
+
+Vector-based Design:
+-> involves creating art using mathematical formulas to define lines, shapes and colors
+
+Prototyping:
+-> the process of creating an interactive model of a product or user interface
+
+Some common UI design tools:
+-> Figma
+-> Sketch
+-> Adobe XD
+-> Canva
+-> Framer
+-> InVision
+-> Adobe Photoshop
+-> Adobe Illustrator
+-> Miro
