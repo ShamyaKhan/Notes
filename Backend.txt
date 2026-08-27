@@ -52,3 +52,119 @@ Why can't we write backend logic in frontend?
    database server will get overwhelmed and won't be able to handle the load
 -> computing power - frontend applications are everywhere. smartphones, laptops, so the user may not have enough computing power
    to perform heavy business logic
+
+
+HTTP Protocol:
+-> the medium through which our browsers talk to our servers, for both sending and receiving data
+-> at the heart of it, there are two main ideas: stateless, client-server model
+
+Stateless:
+-> it has no memory of past interactions
+-> self-contained: each request carries all the necessary information for the server to process it 
+-> such as headers, URL of the resource, methods, cookies, authentication token, session information
+-> after the server responds, it forgets about the request
+-> if client makes another request, the server treats it as a new and unrelated event
+-> benefits
+-> simplicity: server does not need to store any information
+-> scalability: makes it easy to distribute requests across multiple servers because no server needs to keep
+   track of a session and if server crashes, it doesn't affect the state of a client interaction
+-> because it is stateless, developers often implement state management techniques like cookies or sessions or tokens
+   to maintain continuity in interactions where needed like user logins or shopping carts
+
+Client-Server Model:
+-> client is usually a web browser or an application that initiates the communication by sending a request to the server
+-> server hosts resources like websites, apis and other contents and it waits for incoming requests from the clients
+-> after receiving a request, server processes it and sends appropriate response such as web page, JSON, text, error...
+-> https is a secure version of http with more security features like encryption, certificates or TLS
+-> at first, client and server need to establish a connection
+-> for that, http uses TCP
+-> http does not require the underlying transport protocol to be connection based
+-> it only requires it to be reliable and not lose messages, at minimum presenting an error in such cases
+-> TCP is connection based
+-> backend developers deal with application layer of the OSI model
+
+Evolution of HTTP:
+-> HTTP/1.1 introduced persistent connection that allow multiple requests and responses over the same TCP connection that
+   is established before sending the request. it also introduced chunk transfer encoding and better caching mechanism
+-> HTTP/2 introduced multiplexing that allow multiple requests or responses over a single connection
+-> it uses binary framing instead of texts
+-> it supports header compression with edge pack and server push that allow servers to send resources before client requests them
+-> HTTP/3 built on QUIC protocol - a transport layer protocol over UDP
+-> it improved performance with faster connection establishment, reduced latency and better handling of packet loss
+-> it continues to support multiplexing without head-of-line blocking
+
+Request Message:
+PUT /api/users/12345 HTTP/1.1
+Host: example.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82
+Safari/537.36
+Content-Type: application/json
+Content-Length: 123
+Authorization: Bearer eyJhbGc......
+Acccept: application/json
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Referer: https://example.com/dashboard
+Cookie: sessionId=abc123xyz456; lang=en-US
+
+// a blank line here means everything has been sent
+
+{
+  "firstName": "John",
+  "lastName": "Cena",
+  "email": "john@gmail.com",
+   "age": 30
+}
+
+
+Response Message:
+HTTP/1.1 200 OK
+Date: Fri, 20 Sep 2024 12:00:00 GMT
+Content-Type: application/json
+Content-Length: 85
+Server: Apache/2.4.41 (Ubuntu)
+Cache-Control: no-store
+X-Request-ID: abcdef123456
+Strict-Transport-Security: max-age=31536000;
+includeSubDomains: preload
+Set-Cookie: sessionId=abc123xyz456; Path="/"; Secure;
+HttpOnly
+Vary: Accept-Encoding
+Connection: keep-alive
+
+// a blank line here means everything has been sent
+
+{
+   "message": "User updated successfully",
+   "userId": 12345,
+   "status" "success"
+}
+
+
+HTTP Headers:
+-> key-value pairs of different parameters that are sent and received by both client and server
+-> contains metadata
+
+
+Request Headers:
+-> helps the server understand the client's environment, preferences, capabilities
+-> User-Agent: identifies what kind of client is that, browser or postman or some kind of server or mobile app
+-> Authorization: contains credentials like bearer token for the server to identify the user
+-> Cookie: 
+-> Accept: what type of content we are expecting, JSON or text or html
+
+General Headers:
+-> used in both requests and reponses
+-> contains some metadata about the message itself
+-> Date:
+-> Cache-Control:
+-> Connection:
+
+Representation Headers:
+-> primarily deal with the representation of resource being transmitted such as request body or response message
+-> ensures that the client and server knows how to interpret and process the request/response
+-> Content-Type: describes the media type of the request or response. it could be JSON or HTML...
+-> Content-Length: describes the size of the resource in bytes
+-> Content-Encoding: specifies any encoding like G or D-flare
+-> ETag: unique identifier, mostly used for caching 
