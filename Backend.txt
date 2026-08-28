@@ -162,9 +162,61 @@ General Headers:
 -> Connection:
 
 Representation Headers:
--> primarily deal with the representation of resource being transmitted such as request body or response message
+-> provides information or representation of resource being transmitted such as request body or response message
 -> ensures that the client and server knows how to interpret and process the request/response
 -> Content-Type: describes the media type of the request or response. it could be JSON or HTML...
 -> Content-Length: describes the size of the resource in bytes
 -> Content-Encoding: specifies any encoding like G or D-flare
 -> ETag: unique identifier, mostly used for caching 
+
+Security Headers:
+-> used to enhance the security of request/response
+-> controls how the browser behaves with resources and enforces security policies
+-> Strict-Transport-Security (HSTS): ensures the client only communicates with the server over https, 
+   preventing protocol downgrade attack
+-> Content-Security-Policy (CSP): restricts the sources from which contents like JS, CSS or images can be loaded,
+   helping prevent cross-site scripting attack
+-> X-Frame-Options: prevents the web page from being embedded in iframe mitigating clickjack attack
+-> X-Content-Type-Options: ensures that the browser does not try to guess the mime type of the content, 
+   preventing mime type sniffing attack 
+-> Set-Cookie: with httpOnly or secure flag, secures cookies by making them inaccessible to JS and ensure that
+   they are sent over https
+
+
+Extensibility:
+-> http is highly extensible because headers can be easily added or customized without altering the underlying protocol
+-> we only have to add some kind of metadata and the whole flow interaction changes depending on that
+-> makes http adaptable to new technologies and use cases
+-> developers can create custom headers like X-Custom-Header for specific application or their own use cases
+-> accept, accept-language, accept-encoding headers allow servers to server different versions of the content, based on
+   the client's preference
+
+
+Remote Control:
+-> http headers act as remote control on the server side
+-> they allow the client to send instructions or preferences, influencing how the server processes or responds
+-> clients can request specific formats using accept header and the server can respond with appropriate header. if the client
+   wants html, server sends html, if the client wants JSON, server sends JSON, ....
+-> caching and expiration control - the server can use headers like cache-control or expires to control how long a resource
+   should be cached by the client
+-> authentication - the client can authenticate itself through authorization header, influencing access control decisions
+-> these provide various capabilities on top of our messages
+
+
+HTTP Methods:
+-> represents different kinds of actions that a client can request on a server
+-> they define the intent of the interaction
+-> gives clear semantic meaning to each type of action
+
+
+Idempotent:
+-> the methods which we can call multiple times and get the same result
+-> GET, PUT, DELETE: idempotent
+-> POST: non-idempotent
+
+Options Method:
+-> used in the CORS flow (same origin policy)
+-> used to fetch the capabilities of the server for a cross origin request, known as CORS
+-> by default browsers follow the same origin policy which restricts webpages from making request to a different domain
+-> cors specify who can access their resources and how
+-> in a cross-origin request there are two types of flows: simple request, pre-flighted request
