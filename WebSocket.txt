@@ -338,3 +338,39 @@ Real-time systems need to have:
 
 -> some platforms are optimized for serverless or short-lived requests
 -> it can introduce issues like cold starts, sleeping instances, connection limits, usage caps
+
+
+Database Schema:
+-> DB is your source of record
+-> websocket server is just the distribution layer
+
+
+
+Real-time sports database schema (static anchor vs fast events):
+-> building a database for something that happens in real-time is figuring out what stays still and what moves fast
+-> first thing you create is the match (static anchor) which acts as anchor
+-> group together stuff that is true for the whole game
+-> ID, HomeTeam, AwayTeam, Sport, StartTime, Status, HomeScore, AwayScore
+-> once the match is set, you need to handle the dynamic story/commentary/events of the game
+-> you design for events and need a few genereic buckets
+-> ID, MatchId(FK), Actor (who), Message (what), Minute (when), SequenceNo (order), Details (JSON - the anything bucket)
+-> when it comes to specific, like how fast the ball was moving, we can use JSON column. it's like a digital 
+   junk drawer. you don't have to change your database structure everytime you add a new sport. you just throw those extra
+   details into the JSON bucket and let the frontend figure out how to display it 
+
+
+
+# In a real production system, websocket does not replace rest api, it compliments that
+# REST is for commands and initial state
+# WebSocket is for live updates
+
+REST API:
+-> creates the match 
+-> fetches the list of matches
+-> loads the app for the first time or when you refresh the page
+
+Then WebSockets take over:
+-> match created
+-> score updated
+-> commentary added
+-> live events pushed instantly
