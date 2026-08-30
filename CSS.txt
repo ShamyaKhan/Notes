@@ -126,8 +126,32 @@ Percentages:
 -> particularly handy for vertical centering
 
 
+em:
+-> relative unit
+-> relative to the font size of the element
+-> if you use em for font-size property, the size of text will be relative to the font size of parent element
+-> good to use when you're working with modular components like buttons or cards
+-> it can ensure that all aspects of the component such as padding, margin, border scale proportionally with font size
 
 
+rem:
+-> unit for typography
+-> relative to the font size of the root element which is html
+-> by default, font size of html element is 16px
+-> preferred over pixel for typography as it scales proportionally with the user's browser setting
+-> can also help maintain consistent spacing and layout across different elements
+
+
+vh:
+-> viewport height
+-> 1vh is equal to 1% of the viewport's height
+
+vw:
+-> viewport width
+-> 1vw is equal to 1% of the viewport's width
+
+# vh and vw are relative units that allow you to size elements based on the dimension of the browser window
+# useful when you want to create full-screen layouts or elements that maintain a specific proportion of the screen
 
 
 Layout:
