@@ -316,7 +316,10 @@ Subquery in a WHERE clause:
 
 Correlated Subquery:
 -> select name, department and price of the most expensive product in each department
--> refer row from the outer query to the subquery
+-> refer to row from the outer query in the subquery or inner query
 -> like a nested for loop
 -> outer query is going to execute first
--> SELECT name, department, price FROM products AS p1 WHERE p1.price = (SELECT MAX(price) FROM products AS p2 WHERE p2.department = p1.department);
+-> SELECT name, department, price FROM products AS p1 WHERE p1.price = (SELECT MAX(price) FROM products AS p2 
+   WHERE p2.department = p1.department);
+-> print the number of orders for each product without using a join or group by
+-> SELECT p1.name, (SELECT COUNT(*) FROM orders AS o1 WHERE o1.product_id = p1.id) AS num_orders FROM products AS p1;
