@@ -219,4 +219,84 @@ Options Method:
 -> used to fetch the capabilities of the server for a cross origin request, known as CORS
 -> by default browsers follow the same origin policy which restricts webpages from making request to a different domain
 -> cors specify who can access their resources and how
+-> it controls how web applications interact with resources hosted on a different domain
 -> in a cross-origin request there are two types of flows: simple request, pre-flighted request
+
+
+Simple Request:
+-> suppose our frontend is at example.com and server is at api.example.com
+-> we make a GET request to the server
+-> GET /api/products/123 HTTP/1.1
+   Host: api.anotherdomain.com
+   Origin: https://example.com
+   Accept: application/json
+
+-> server checks for the origin header in the request and if the origin is allowed, the server includes the 
+   access-control-allow-origin in the response and sends the resource 
+
+-> HTTP/1.1 200 OK
+   Content-Type: application/json
+   Access-Control-Allow-Origin: https://example.com
+   {
+       "product": {
+           "id": 123,
+	   "name": "example product",
+           "price": 29.99
+          }
+   }
+
+-> while parsing the response, browser looks for the appropriate cors header. if the access-control-allow-origin contains is there
+   and it contains our domain, the browser lets the response go through client or allows the JS client read the response
+-> otherwise if the access-control-allow-origin is missing, the browser will not allow JS code to read the response
+
+
+Pre-flighted Request:
+-> the browser checks three conditions before it decides it has to do a pre-flighted request
+-> it has to inquire some capabilities before the original request to let the server know about them
+-> when does a request qualify as a pre-flighted request?
+-> first condition is, it has to be a cross-origin request
+-> then, it has to fall under either one of the three conditions 
+-> the method is not GET/POST/HEAD (eg, PUT, DELETE)
+-> the request includes non-simple headers (like Authorization, X-Custom-Header)
+-> the request has a Content-Type other than application/x-www-form-urlencoded, multipart/form-data, or text/plain
+-> a pre-flighted request is made with the http method: options
+
+-> OPTIONS /api/resource/ HTTP/1.1
+   Host: api.anotherdomain.com
+   Origin: https://example.com
+   Access-Control-Request-Method: PUT   // asking the server whether this method is supported for this route or not
+   Access-Control-Request-Headers: Authorization   // whether the server supports this header or not if needed
+
+-> the browser sends the options request to the server
+-> the request does not include any data or request body
+-> it's just a general inquiry to the server about it's capabilities
+-> after that, if the server supports cross origin request, it will send response like this
+-> otherwise the request will be blocked by the browser
+
+-> HTTP/1.1 204 No Content
+   Access-Control-Allow-Origin: https://example.com
+   Access-Control-Allow-Methods: PUT, DELETE
+   Access-Control-Allow-Headers: Authorization
+   Access-Control-Max-Age: 86400   
+
+-> access-control-max-age means, the response will be same for this much time, you don't need to make any more
+   pre-flighted request before you send the original request for this route
+-> then the browser sends the original request
+
+-> PUT /api/resource HTTP/1.1
+   Host: api.anotherdomain.com
+   Origin: https://example.com
+   Authorization: Bearer token123
+   Content-Type: application/json
+   {
+       "name": "John Doe"
+   }
+
+-> then the server responds according to the original request
+
+-> HTTP/1.1 200 OK
+   Access-Control-Allow-Origin: https://example.com
+   Content-Type: application/json
+   {
+      "message": "Resource updated successfully"
+   }
