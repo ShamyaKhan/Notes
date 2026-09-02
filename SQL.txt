@@ -4,9 +4,8 @@ Overview:
 3. After connecting to database, we write SQL to communicate/interact with the database
 4. It is like a communication language
 5. It is supported by Oracle, MySQL, Microsoft SQL, PostgreSQL
-6. Challenges: writing efficient queries, designe datavase schema, understanding when to use      advanced features, manage database in production environment
-7. Database design process: what kind of thing we are storing, what properties does thing
-   have, what type of data each properties contain
+6. Challenges: writing efficient queries, design database schema, understanding when to use advanced features, manage database in production environment
+7. Database design process: what kind of thing we are storing, what properties does each thing have, what type of data each properties contain
 8. Each column records one property and each row represents one thing
 
 
@@ -90,8 +89,7 @@ Foreign key:
 
 
 Data Consistency:
--> Ability of database to make sure the information we put into and work with, actually 
-   makes sense
+-> Ability of database to make sure the information we put into and work with, actually makes sense
 
 Foreign key constraints around data insertion:
 1. We insert a photo that is tied to a user that exists -> everything works OK
@@ -323,3 +321,8 @@ Correlated Subquery:
    WHERE p2.department = p1.department);
 -> print the number of orders for each product without using a join or group by
 -> SELECT p1.name, (SELECT COUNT(*) FROM orders AS o1 WHERE o1.product_id = p1.id) AS num_orders FROM products AS p1;
+-> we can put a subquery inside of a select clause, we can get away without a from/join clause as long as the subquery returns a single value
+-> SELECT (SELECT MAX(price) FROM products);
+-> SELECT (SELECT MAX(price) FROM products) / (SELECT MIN(price) FROM products);
+-> SELECT (SELECT MAX(price) FROM products), (SELECT AVG(price) FROM products);
+-> SELECT (SELECT MAX(price) FROM phones) AS max_price, (SELECT MIN(price) FROM phones) AS min_price, (SELECT AVG(price) FROM phones) AS avg_price;
