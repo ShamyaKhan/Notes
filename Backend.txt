@@ -255,7 +255,7 @@ Pre-flighted Request:
 -> it has to inquire some capabilities before the original request to let the server know about them
 -> when does a request qualify as a pre-flighted request?
 -> first condition is, it has to be a cross-origin request
--> then, it has to fall under either one of the three conditions 
+-> then, it has to meet at least one of the three conditions 
 -> the method is not GET/POST/HEAD (eg, PUT, DELETE)
 -> the request includes non-simple headers (like Authorization, X-Custom-Header)
 -> the request has a Content-Type other than application/x-www-form-urlencoded, multipart/form-data, or text/plain
@@ -300,3 +300,38 @@ Pre-flighted Request:
    {
       "message": "Resource updated successfully"
    }
+
+
+HTTP Response Status:
+-> communicate the result of a request in a standardized way
+-> you can just look at the status code and understand and see whether the request was successful or not
+   without looking into the body 
+-> help client identify errors by specific codes
+-> consistent regardless of the platform or language
+-> 1xx: Information
+   - indicate that server has received the headers and client can proceed to send the request body
+   - commonly used in large uploads
+   - also used for switching protocols
+   - indicates that server is switching protocols as requested by the client eg. upgrade from http to websocket
+-> 2xx: Success
+   - 200: server is returning the requested data or performing the requested action
+   - 201: succeffully created new resource
+   - 204: successful but no content, server provides some information through headers, sometimes used in delete requests
+-> 3xx: Redirection
+   - 301: moved permanently, the requested resource has been permanently moved to a new url and the future request 
+          should use that new url
+   - 302: temporary redirect, the requested resource is temporarily located at a different url but the client 
+          should continue using the original url
+   - 304: not modified, resource has not been modified since the last time client requested it. mostly used in conjunction
+          with conditional get requests to allow efficient caching eg. when we use etg to let the client know response
+          has not been modified, it should use cached one instead of downloading the new response
+-> 4xx: Client error
+   - 400: ad request. client sends invalid or illogical data
+   - 401: unuthorized. when a request requires authentication but the client didn't provide valid credentials 
+          or not authenticated at all
+   - 403: forbuidden. server understood the request but it refused to authorize. user a tries to delete resource of user b
+   - 404: not found. client requests a resource that does not exist
+   - 405: method not allowed. invalid http method
+   - 409: conflict. client tries to create a folder with a name that already exists
+   - 429: too many requests. used in rate limit when a client too many requests in a short interval
+-> 5xx: Server error
