@@ -291,7 +291,8 @@ Subquery in a SELECT statement:
 Subquery in a FROM clause:
 -> as long as the outer queries (select/where) are compatible
 -> must have an alias applied to it
--> SELECT name, price_weight_ratio FROM (SELECT name, price / weight AS price_weight_ratio FROM products) AS p WHERE price_weight_ratio > 5;
+-> SELECT name, price_weight_ratio FROM (SELECT name, price / weight AS price_weight_ratio FROM products) AS p 
+   WHERE price_weight_ratio > 5;
 -> SELECT * FROM (SELECT MAX(price) FROM products) AS p;
 -> SELECT AVG(order_count) FROM (SELECT user_id, COUNT(*) AS order_count FROM orders GROUP BY user_id) AS p
 -> SELECT MAX(avg_price) AS max_avg_price FROM (SELECT AVG(price) AS avg_price FROM phones GROUP BY manufacturer) AS p;
@@ -321,8 +322,40 @@ Correlated Subquery:
    WHERE p2.department = p1.department);
 -> print the number of orders for each product without using a join or group by
 -> SELECT p1.name, (SELECT COUNT(*) FROM orders AS o1 WHERE o1.product_id = p1.id) AS num_orders FROM products AS p1;
--> we can put a subquery inside of a select clause, we can get away without a from/join clause as long as the subquery returns a single value
+-> we can put a subquery inside of a select clause, we can get away without a from/join clause as long as the subquery 
+   returns a single value
 -> SELECT (SELECT MAX(price) FROM products);
 -> SELECT (SELECT MAX(price) FROM products) / (SELECT MIN(price) FROM products);
 -> SELECT (SELECT MAX(price) FROM products), (SELECT AVG(price) FROM products);
--> SELECT (SELECT MAX(price) FROM phones) AS max_price, (SELECT MIN(price) FROM phones) AS min_price, (SELECT AVG(price) FROM phones) AS avg_price;
+-> SELECT (SELECT MAX(price) FROM phones) AS max_price, (SELECT MIN(price) FROM phones) AS min_price, 
+   (SELECT AVG(price) FROM phones) AS avg_price;
+
+
+DISTINCT:
+-> always used inside of a select clause right after select keyword
+-> gives the list of unique values inside of a column
+-> SELECT DISTINCT department FROM products;
+-> SELECT COUNT(DISTINCT department) FROM products;
+-> SELECT DISTINCT department, name FROM products;
+
+
+GREATEST:
+-> compute the cost to ship each item (shipping is the maximum of (weight * $2) or $30)
+-> SELECT name, weight, GREATEST(30, 2 * weight) FROM products;
+
+
+LEAST:
+-> all products are on sale. price is the least of the products price * 0.5 or $400
+-> SELECT name, price, LEAST(price * 0.5, 400) FROM products;
+
+
+CASE:
+-> print each product and its price. also print a description of the price
+-> if price > 60 then 'high', if price > 300 then 'medium', else print 'cheap'
+-> SELECT name, price, 
+     CASE
+	WHEN price > 600 THEN 'high'
+	WHEN price > 300 THEN 'medium'
+	ELSE 'cheap'
+     END
+   FROM products;

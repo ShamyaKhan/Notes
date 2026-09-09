@@ -28,7 +28,7 @@ Sync communication:
 
 
 Async communication:
-1. When an operation takes place in a service, it will emit an event to the event bus    decribing what just happened
+1. When an operation takes place in a service, it will emit an event to the event bus decribing what just happened
 2. The event bus will route it off to every single sevice so that any service can use
    the information if needed
 3. Data duplication, extra storage, extra database

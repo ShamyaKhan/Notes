@@ -1,59 +1,3 @@
-How data flow?
--> request starts from our browser
--> first it reaches the dns server
--> in dns server, we define different types of records
--> A record: points to a particular IP
--> C record: points to a particular domain name or subdomain
--> the A record IP address comes from an EC2 instance
--> our request reaches the EC2 instance through this IP
--> before it reaches the particular server/computer, it goes through a firewall (AWS native firewall)
--> the firewall has to allow some kind of request to pass through
--> in the security group of AWS instance, we have to specify what ports we would allow to be accessible over internet
--> SSH port (port range 22) to log into AWS instance through terminals or cmd so we can do different kinds of operations
--> HTTPS (port range 443), HTTP (port range 80) - if we don't allow these two ports, AWS will block it right here
--> after this, our request reaches the computer/server/aws instance
--> then we are using reverse proxy
--> it is a server that sits in front of other servers so that we can manage different types of redirect of config from 
-   a centralized space instead of changing configs in every single server
--> for that we are using nginx
--> we are using Certbot to assign SSL certificates automatically
--> it is listening for port 80 in our AWS instance and redirecting request to port 443 which is an https request
--> this part is managed by Certbot
--> what we configure in backend.conf file
--> server_name { backend_demo.sriniously.xyz 
--> whatever request comes to this domain our nginx config will redirect those request to localhost:3001
--> this is the port our node server is running on and this is the final redirection
--> browser - dns - aws - firewall - aws instance - nginx - localhost:3001
-
-
-
-Why Backend?
--> any kind of action that deals with data - fetch, receive, persist data
--> browser fetches the html, css, js files one by one and then it paints our window
--> once browser fetches the js files, it hydrates all the event listeners for any kind of interactions
--> the browser is our runtime as it runs all the logic
--> browser runtimes are often sandbox environments, meaning they are isolated from our operating system
--> therefore, the code can access only a limited amount of resources
--> cors is a security policy browsers that restricts JS code to call external APIs, only allowed in the same domain
--> it makes sense because browser is fetching code from a remote server and executing in the user's browser
--> if it's not isolated enough, the remote code can access data or files from user's computer
-
-
-Why can't we write backend logic in frontend?
--> security - browsers are restrictive, often times a backend needs to access file system (write log file, access env variables)
--> cannot call external APIs unless they have appropriate cors headers, but backend servers often need to connect to other
-   servers and fetch data from multiple sources
--> databases - server runtime has access to all native database drivers which allows to communicate efficiently with databases
-   these drivers are written to work in environments that can handle socket connections, binary data, maintain persistent
-   connections. browsers cannot do this
--> backend servers maintain a list of connections, often known as connection pool to our database server so that it does not have
-   to create and destroy connections again and again
--> they receive thousands of requests per second, so they cannot create and destroy connection with each request, otherwise
-   database server will get overwhelmed and won't be able to handle the load
--> computing power - frontend applications are everywhere. smartphones, laptops, so the user may not have enough computing power
-   to perform heavy business logic
-
-
 HTTP Protocol:
 -> the medium through which our browsers talk to our servers, for both sending and receiving data
 -> at the heart of it, there are two main ideas: stateless, client-server model
@@ -335,3 +279,96 @@ HTTP Response Status:
    - 409: conflict. client tries to create a folder with a name that already exists
    - 429: too many requests. used in rate limit when a client too many requests in a short interval
 -> 5xx: Server error
+   - 500: internal server error. unexpected conditions eg. some process broke or some exceptions raised but not handled
+   - 501: not implemented. method currently not supported, might be in future
+   - 502: bad gateway. used in proxies like nginx, when the server acts as a proxy like in a load balancer or reverse proxy and 
+          the upstream server returns an invalid response
+   - 503: service unavailable. eg. during high traffic or maintenance
+   - 504: gateway timeout. upstream server failed to respond withing timeout period
+
+
+
+HTTP Caching:
+-> technique to store copies of responses for reuse
+-> reduces the need to repeated requests to the server
+-> improves load time, reduces bandwidth, decreases server load
+
+
+Response Headers for Caching:
+-> Cache-Control: max-age=10, public  [you should maintain the cache for this resource for maximum 10 seconds]
+-> ETag: 3141  [basically a hash, computed from a response], server can hash a response and send that in the form of ETag
+-> Last-Modified: Fri, 27 Sep, 2024 13:48:33 GMT  [this is the last time this resource was modified], judging from this time,
+   we can decide whether we should use the old/cached resource or request for a new one
+
+
+Request Headers for Caching:
+-> when we do a GET request for the same resource again
+-> If-None-Match: 3141  [it means that if the hashed version of response object aka ETag of the requested resource is not the 
+   same as this one]
+-> If-Modified-Since: Fri, 27 Sep 2024 13:48:33 GMT  [if the request is modified after this]
+-> it means we have the outdated version, so send the updated resource
+-> otherwise I will use the cached version
+
+
+Response Headers in response to the second request:
+-> HTTP/1.1 304 Not Modified
+-> server checked the none-match header which is the ETag and also checked the last-modified
+-> since the resource matched either the ETag or Last-Modified, it sends the client a 304 response
+-> it means the resource has not been modified since the last time, you can use the cached version
+-> gets complicated in production environment because what if server forgets to update the ETag
+-> modern solutions: react query [complete client-side caching] 
+
+
+Content Negotiation Header:
+-> a mechanism in which client and server agree on the best format to exchange data
+-> client can indicate its preferred format like JSON, XML or HTML and server will try to respond with a compatible format
+-> if not available, server will use a fallback format
+-> 3 types: media-type
+-> media-type: client specifies the desired format through Accept header eg. application/json or application/xml
+-> language negotiation: client requests content in a specific language using Accept-Language header
+-> encoding negotiation: client specifies which encoding it supports using Accept-Encoding header eg. gzip or deflate and
+   server responds with that compression format. otherwise, the response size becomes huge and it causes waste of bandwidth.
+   on the client side, browser will de-compress it
+
+
+Persistent connections and keep-alive:
+-> introduced in HTTP/1.1 to avoid opening and closing TCP connection for every request-response cycle
+-> a single TCP connection can be used for multiple requests and responses preventing overhead
+-> to achieve that, they introduced a new header, keep-alive
+-> it enables persistent connection and allows the client and server to reuse the same connection for multiple 
+   request-response until one of them decides to close it
+-> in HTTP/1.1 connections are persistent by default, they remain open for further requests unless explicitly closed
+-> reduces latency, saves resources
+-> keep-alive header is used to explicitly ask the server to keep the connection open
+-> it can include options like how long the connection should remain open with a timeout or how many requests cam be
+   sent before the connection is closed with max-value
+-> when connection is set to close, it is closed after the response is sent. it is the default behavior in HTTP/1.0
+   it can still be explicitly enforced in HTTP/1.1
+
+
+Handling large requests and responses:
+-> multipart is used to send files or large files to the sever. the binary data of the file is transferred in different parts.
+   that's why it is called multipart request
+-> Content-Type: multipart/form-data; boundary=----WebKitFormBoundarycn7JAzmAvSCc5fPB
+-> since the binary data of the file is transferred in parts, we want to specify what is going to be the delimiter,
+   what will separate the parts. boundary='' is the delimiter. we have it at the start and end of each part
+-> when server sends large data, it streams the data to the client-side in chunks in different requests
+-> Content-Type: text/event-stream
+-> Connection: keep-alive  [keep the connection alive until all data is sent]
+-> client keeps appending data and constructing the whole file
+
+SSL:
+-> original protocol for securing communication between client and server
+-> it encrypts data so that sensitive information like password or credit-card numbers cannot be intercepted by attackers
+
+TLS:
+-> replaced SSL, modern and secure version of SSL
+-> modern version of encryption that client and server use for data transmission
+-> ensures that any data sent between client and server is protected from interception and tampering
+-> it uses certificate to authenticate the server and establish an encrypted connection, preventing eavesdropping 
+   and data breaches
+
+HTTPS:
+-> secure version of HTTP with more security features provided by SSL or TLS
+-> HTTPS uses TLS as the underlying mechanism
+-> encrypts the communication between client and server 

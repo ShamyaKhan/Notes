@@ -154,6 +154,27 @@ vw:
 # useful when you want to create full-screen layouts or elements that maintain a specific proportion of the screen
 
 
+
+Pseudo Classes:
+-> special keywords that allow you to select an element based on its specific state or position. It includes:
+-> when its active
+-> when its being hovered over by a mouse
+-> when its the first child of a parent
+-> when its the last child of a parent
+-> when a link has been visited
+-> when its disabled
+-> to use, you add it to the selector by using a colon followed by the name of the pseudo class
+-> active, hover, first-child, last-child, visited, disabled, focus, first-of-type, last-of-type, nth-of-type, 
+   modal, enabled, checked, required
+
+Action Pseudo Classes:
+-> special keywords that allow you to provide feedback without needing javascript or any programming language
+-> hover, active, focus, visited, focus-within, enabled, disabled, target
+
+
+Input Pseudo Classes:
+-> focus, hover, checked, required, valid, invalid, disabled, autofill, optional, in-range, out-of-range  
+
 Layout:
 -> how the visual elements are arranged on a page or screen to communicate a message
 -> it's like the blueprint of a design
