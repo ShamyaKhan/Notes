@@ -367,7 +367,7 @@ Real-time sports database schema (static anchor vs fast events):
 REST API:
 -> creates the match 
 -> fetches the list of matches
--> loads the app for the first time or when you refresh the page
+-> you hit REST api when you load the app for the first time or refresh the page
 
 Then WebSockets take over:
 -> match created
