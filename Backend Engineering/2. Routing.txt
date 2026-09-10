@@ -1,0 +1,64 @@
+Routing:
+-> expresses the where of a request
+-> where do you want to send your intention
+-> where/which resource you want to perform your action on
+-> where do you want to go
+-> your action (method) and your route (URL parameters, address), server takes these two and maps it to a particular handler 
+   or a set of instructions to perform all the business logic, operations and returns you some data
+-> routing is basically mapping the url parameters to a server-side logic
+
+
+GET /api/books HTTP/1.1
+-> (/api/books): route
+-> (books): resource
+
+
+Static Routes:
+-> do not have any variable parameters
+-> it's like a constant string that does not change
+-> GET /api/books HTTP/1.1
+
+
+Dynamic Routes:
+-> they have dynamic/variable parameters
+-> server can extract the dynamic part of the route and do whatever operation it needs to do
+-> the dynamic parameter is always a string
+-> it is also called a route parameter or path parameter
+-> GET /api/books/:id HTTP/1.1
+-> GET /api/books/123 HTTP/1.1
+
+
+Query Parameters:
+-> another type of parameter is called query parameter 
+-> they are key-value pairs after the question mark in the route
+-> it's like a metadata about the request 
+-> the client can also use this metadata for subsequent requests
+-> /api/search?query=someValue&page=1&limit=5
+-> GET requests do not have a body, if you want to send some data you do it using query parameters
+-> we do not use path parameters because they server a semantic expression
+
+
+Nested Routes:
+-> nest different types of information in different levels to express different semantic meanings
+-> GET /api/users/123/posts/456
+
+
+Route Versioning and Deprecation:
+-> your api endpoints return data in a particular format
+-> if new requirements come later on and you have to change the response structure
+-> instead of changing the whole routing endpoints, we can implement versioning
+-> so now you can server data in a different format for new requirements while old users can still use the previous version
+-> you can also eventually deprecate v1 and send notice to frontend developers so that they can migrate 
+-> your clients have a window where they have the opportunity to migrate
+-> very stable and complete workflow to add new structures/changes to your api
+-> GET /api/v1/products HTTP/1.1
+-> GET /api/v2/products HTTP/1.1
+-> a common practice for servers that have rest api interface
+
+
+Catch all routes:
+-> send request to a route that the server does not serve response for
+-> after mapping all the matching routes to a handler, server will have a route for this type of requests
+-> the route is /*
+-> server will send a friendly message that this route does not exist
+-> GET /api/v3/products
