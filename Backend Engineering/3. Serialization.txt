@@ -1,0 +1,39 @@
+How client and servers make sense of data that is sent or received?
+-> client communicates with server through some means of network communication eg. HTTP/gRPC/WebSocket
+-> let's consider our frontend is a JS app and backend is a rust app
+-> how the server understand data in its own format or data types, processes it and sends a response
+-> then how the client is able to understand data and show some UI or perform some logic
+
+
+Common Standard:
+-> two machines are in different locations and they are connected over the internet
+-> you have to come up with a protocol or technique so that one machine is able to send data to another in a way that
+   they should be able to parse the data and make sense of it in a way that is language agnostic
+-> we will need a common standard or set of rules that both client and server will agree to
+-> client will do what it needs to do during the session of the user
+-> when sending data to the server, it will transform the logic from its own language to the standard format
+-> when receiving, server takes data in the standard format and converts into its own language
+-> when sending a response, the server converts data into the standard format again
+-> so the solution is serialization
+-> serialization and deserialization is basically converting to and from data to a common format so that during transmission
+   or storage so that it is domain/language agnostic, therefore machines from different environments are able to make sense
+   of the data
+
+
+Some popular serialization standards:
+-> text-based serialization: JSON, XML, YAML
+-> binary format: protobuff, aviaro etc..
+
+
+
+JSON:
+-> {
+      "name": "John Doe",
+      "age": 30,
+      "isDeveloper": true,
+      "skills": ["JavaScript", "Node JS", "React"]
+   }
+
+-> used in configuration files, transmission between clients and servers in REST api, log files
+-> with respect to the OSI model, after exiting the application layer, data is serialized and before entering
+   it is deserialized
