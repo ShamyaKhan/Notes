@@ -1,0 +1,13 @@
+Authentication:
+-> a mechanism to assign an identity to a subject
+-> in a given context (OS, application) who are you
+
+
+Authorization:
+-> in a given context, what can you do
+-> all your capabilities, permissions
+
+
+Securing Password:
+-> cryptographic algorithms transform passwords into irreversible fixed length representations
+-> hashing transforms the plain text into fixed length representation which gives the same result for the same string
