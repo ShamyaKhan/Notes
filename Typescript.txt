@@ -133,4 +133,19 @@ Issues to keep in mind:
 Enum (enumeration):
 -> object that stores closely related values
 -> values can be either number or string
--> can be used as a type
+-> when we create an enum, we create a type as well
+-> when compiled to javascript, enums becomw objects
+-> primary goal is to signal other developers that these are very closely related values
+-> use whenever you have a small fixed set of values which are known at compile time
+
+
+Type Assertion:
+-> we as developers override typescripts default behavior
+-> typescript will consider the type we want it to
+
+
+Generics:
+-> like function arguments but for types in class/function definitions
+-> allow us to define the type of a property/argument/return value at a future point
+-> used heavily when writing reusable code
+-> very similar to how arguments work inside a function
