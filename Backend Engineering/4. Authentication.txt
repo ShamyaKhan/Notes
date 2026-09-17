@@ -8,6 +8,56 @@ Authorization:
 -> all your capabilities, permissions
 
 
+Session:
+-> the stateless behavior of http is good enough for static contents
+-> as the web transitioned into dynamic contents, it became a bottleneck
+-> ecommerce websites need to remember what items are there in your cart, how could a user remain logged in while
+   navigating between different pages
+-> it marked the beginning of stateful interaction in the web
+-> session provides a way to establish temporary server-side context for each user
+-> it has some kind of memory about the user that the server can use to remember when he makes a request next time
+-> session creation:
+  - when a user logs in, the server creates a unique session ID and stores it alongside relevant user data in a persistent
+    store. it can be a database, redis store
+-> Session ID:
+  - the session ID which is a unique key, was sent to the client as a cookie
+  - all the upcoming requests will include that cookie so that using the session ID inside the cookie server can fetch all
+    the relevant information about the user from the persistent store
+  - so the session ID enabled the web to have some kind of memory for the sake of the client
+-> Short-lived:
+  - sessions have a expiry date
+  - after that, the server creates another session, stores it and sends the session ID as cookie
+-> to handle large user-base and to make servers scalable, session are stored in databases
+-> it provides faster lookups and persistent storage across server restarts
+-> eventually we moved to distributed architectures eg. redis or mem cache
+
+
+
+JWT:
+-> 
+
+
+
 Securing Password:
 -> cryptographic algorithms transform passwords into irreversible fixed length representations
 -> hashing transforms the plain text into fixed length representation which gives the same result for the same string
+
+
+Multi-Factor Authentication:
+-> combines different principles of security layer
+-> something you know (password, PIN)
+-> something you have (card, OTP)
+-> something you are (biometric data - fingerprints, retina scans)
+
+
+Modern Authentication Mechanisms:
+-> OAuth 2.0
+-> JWT
+-> Zero trust architecture
+-> password-less authentication
+
+
+Candidates for future authentication:
+-> Decentralized identity (blockchain)
+-> Behavioral biometrics
+-> Post-quantum cryptography
