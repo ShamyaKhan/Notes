@@ -374,3 +374,27 @@ Then WebSockets take over:
 -> score updated
 -> commentary added
 -> live events pushed instantly
+
+
+
+-> we will pass an http server instance in a websocket server so that it can attach itself to the same underlying server
+-> http server will listen on that port and handle rest api requests
+-> at the same time, websocket will use the same server to listen for upgrade requests
+-> it avoids running a second port for websocket, simplifies networking and deployment
+
+
+
+if (res.app.locals.broadcastMatchCreated) {
+      res.app.locals.broadcastMatchCreated(event);
+    }
+-> push data through the pipe to the ws clients
+
+
+
+Security:
+-> define separate rules for http and websocket
+-> higher limits for http and stricter limits for websocket to prevent handshake spam
+-> the behavior of a user browsing an api through http is very different from a user opening a persistent connection
+-> ARCJET_MODE = "DRY_RUN" will allow you to see what arcjet would block without actually blocking it
+-> arcjet({rules: [shield({mode: arcjetMode}]}) protects against most common attacks like sql injections or XSS by
+   analyzing the structure of incoming request
