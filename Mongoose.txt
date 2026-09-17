@@ -1,0 +1,14 @@
+-> Elegant Object Data Modelling for node js
+-> in MongoDB, data are stored as bson
+-> mongoose will model the data like javascript object
+-> mongoose will implicitly connect to the MongoDB database using something called Mongo Driver
+-> driver is like an interface that allows us to connect to an external component
+-> implicitly there will be object mapping between the node application and mongoDB database
+
+
+Benefits of using mongoose:
+-> abstraction from raw low level MongoDB
+-> relationship between NoSQL data
+-> provides schema validation
+-> object data mapping - translation of data into object that our code understands and vice-verca
+-> 40% - 60% less code compared to raw mongoDB package
