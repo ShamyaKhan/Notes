@@ -149,3 +149,8 @@ Generics:
 -> allow us to define the type of a property/argument/return value at a future point
 -> used heavily when writing reusable code
 -> very similar to how arguments work inside a function
+
+
+Inheritance vs Composition:
+-> inheritance is characterized by an "is a" relationship between two classes
+-> composition is characterized by a "has a" relationship between two classes
