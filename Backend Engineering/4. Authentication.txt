@@ -34,8 +34,196 @@ Session:
 
 
 JWT:
--> 
+-> by the mid 2000s web applications grew into distributed systems and they were stateful
+-> although they were effective, they caused a bottleneck because:
+  - memory: maintaining session data for millions of users became costly
+  - replication: in distributed architectures, synchronizing session data across servers/regions caused latency
+-> developers sought a solution that could offload state from the server while maintaining security and integrity
+-> thus, JWT came into
+-> a mechanism for transferring claims between two systems in a stateless manner
+-> JWTs are self-contained tokens
+-> they contain user data and cryptographic signatures in one token which is base64 encoded
+-> it has three parts: 
+  - header (algorithm and token type)
+  - payload (data)
+  - verify signature
+-> therefore, the server does not have to store session information anymore
+-> it happens with every request
+-> it is very lightweight, saves a lot of storage cost
 
+
+
+Advantages of JWT:
+-> statelessness: enabled no server-side storage cost
+-> scalability: in microservices and distributed architectures, a cookie issued from one server cannot be used for a server
+   which is in another domain. JWT enabled the client to send jwt to different servers and all of them can have the severt 
+   key using which they can decode the jwt and verify the users identity. A server can be scaled to a lot of instances and 
+   won't have to worry about user authentication anymore. All the servers can authenticate at the same time a shared secret key
+-> portability: lightweight, user-friendly, base64 encoding string format. Because of these, jwt could be passed between 
+   different systems, could be stored in local storage (should not), could be stored in cookies and a lot of limited space 
+   storage systems. you can also send them in url values
+
+
+Challenges of JWT:
+-> token-theft: if someone has access your jwt token, they can impersonate you. no mechanism from server to invalidate the 
+   token until it expired manually, unless the server changed its secret using which it verified all the users. if the server
+   does so, all the users of that platform will have to login again and get new jwts
+-> revocation: if server wanted to revoke some users access, it could not do that since jwts are stateless. so there is no 
+   way to track the status of a jwt token until it expired
+
+
+
+Normal Approach:
+-> user logs in and server sends a jwt token which the user stores in its system
+-> in every subsequent request, user sends the jwt in the authorization header or cookie
+-> the server verifies the token with its secret key
+
+
+
+Hybrid Approach:
+-> combine statelessness with statefulness
+-> in a typical jwt workflow we don't do additional lookup in our storage eg. database/redis
+-> in this approach, after verifying the jwt, you maintain a blacklist of jwts in your persistent storage
+-> using that, you can temporarily block some users or revoke access for some users
+-> the question arises is, if you are using persistent storage or checking the validity of statefulness, why not follow the
+   stateful approach which is more secure
+-> a good advice: don't go with all these authentication strategies, instead go with auth provider
+-> if you're building a large complex application, it's good idea to go with an external auth provider
+
+
+
+
+Cookie:
+-> a way to store a piece of information in a user's browser from the server side
+-> using it, servers can store some information in the client's browser given certain conditions
+-> condition is, that cookie is only accessible to that server
+-> a cookie set by one server, will be sent in all the subsequent requests to that server
+-> at first, the user authenticates with username, password
+-> if it's successful, the server sends a cookie with authorization token or session id and stores it in client's browser
+-> in all subsequent requests, browser sends this cookie to the server so that it can validate authenticity and authorize
+
+
+
+Types of Authentication:
+(1) Stateful
+ -> user sends username/email, password to the server
+ -> server validates the credentials and if successful the server generates a session ID
+ -> server bundles the session id with user data and stores them in redis/database
+ -> it send the session id back to the client in a cookie 
+ -> the cookie is httpOnly, meaning javascript cannot access that cookie and session ID
+ -> all the subsequent requests to the server will have this cookie and server will take session ID from that cookie
+ -> server will authenticate/authorize the user and the user can call the api
+ -> the session ID can be a cryptographic random string or a jwt token or etc...
+(2) Stateless
+ -> user sends username/email, password to the server
+ -> server validates the credentials and if successful the server generates a signed jwt token with its secret key
+ -> the secret key has to be stored somewhere securely so that it can sign or verify jwts
+ -> the jwt contains some user information and server sends it back to the client
+ -> in all subsequent requests, browser sends the token in Authorization header
+ -> server extracts the token, verifies it using its secret key, finds out user's id and sends successful api response
+(3) API Key
+ -> a completely different set of use cases
+ -> you go to a platform/UI and click on generate an api key
+ -> you get a cryptographically generated safe random string 
+ -> you use that string to gain access the server which caters to this platform/UI
+ -> for example, some user may want programmatic access to the models/server that powers ChatGPT or they may want the 
+    response of ChatGPT in their programs. to provide access to your server (not UI) in a confined or permission-based
+ -> you can use this and attach it in header or some other way
+ -> then you can do all the operations that the server's native platform can do
+    or expiry-based manner, people have come up with API keys
+ -> they easy to generate, ideal for machine to machine communication
+(4) OAuth 2.0:
+ -> the practice of maintaining so many passwords for so many platforms caused security issues and fatigue
+ -> it lead to a concept called delegation problem
+ -> one website started needing access to other websites resources programmatically
+ -> for example, a hotel/train booking app needs access to your gmail account to programmatically scan your flight tickets
+ -> or a social media platforms wants to import contacts from other platforms
+ -> developers came up with the idea of sharing a token to share access to other platforms
+ -> this token has access to specific permissions eg. read contacts instead of all permissions like password
+ -> OAuth 1.0 had four components: resource owner, client, resource server and authorization server
+ -> at first, the client (e.g. Facebook) redirects the user to the authorization server
+ -> the user grants access and clicks on yes
+ -> authorization server sends token to the client
+ -> client uses the token to access the resources (e.g. google contacts)
+ -> OAuth 1.0 was very complicated to implement, it used cryptographic signatures which were very error prone
+ -> OAuth 2.0 introduced Bearer tokens and allowed developers to choose flows based on the app type
+ -> some flows are:
+  - auth code flow or server-side apps
+  - implicit flow or browser based apps (discouraged)
+  - client credentials flow for machine to machine communication
+  - device code flow where we have limited inputs eg. smart tv
+ -> OAuth solved the issue of authorization but did not solve the issue of authentication
+
+
+
+OpenID Connect:
+-> built on top of OAuth 2.0 security mechanisms to fill the gap of authentication in the workflow
+-> introduced ID token (typically a jwt token)
+-> the token had information like the user ID, when they logged in and who issued the token
+-> sign-in with google/facebook/GitHub
+-> you go to an application and click on sign-in with google
+-> it redirects you to google's authorization page
+-> you login into google and provide whatever permissions that application asked for
+-> the authorization server sends two things: a authorization code and an ID token back to that application
+-> the application exchanges that authorization code with the resource server for an access token on behalf of the user
+   and an ID token if it did not get previously
+-> using the ID token, the application perform different operations on behalf of the user in the resource server
+-> it will appear as you before the resource server
+-> OAuth 2.0 and OpenID ensures that no user or platform gets more access than they need or asked for from the user
+
+
+
+When to use what?
+-> stateful: web applications or SAAS
+-> stateless: APIs, scalable distributed systems
+-> OAuth: third party integrations, provide login via external providers
+-> API key: server to server
+
+
+
+
+Pros and Cons of stateful and stateless authentication:
+-> in a stateful authentication system, you have centralized control of all the sessions and real-time information of  all the 
+   active sessions because you have a persistent store. you can also revoke a user's access or session using that. it is well 
+   suited for applications with modern traffic and strict session requirements. most applications should go with this type of 
+   authentication. the challenge is limited scalability issues, higher operational complexity with distributed systems, latency
+   issues when you have multiple servers across regions
+-> the pros of stateless authentication system is  scalability, no session storing dependency. ideal for distributed systems 
+   and mobile-friendly applications where cookies are not a thing. the cons are token revocation complexity. no way of doing 
+   that apart from expiration or changing your jwt secret key which will make all users of your platform to log out which is a
+   serious inconvenience. you can device a hybrid approach where the main web app which runs in a browser, you can choose stateful
+   authentication and clients that use your apis in mobile apps or third party integration between different servers, they can
+   adopt a stateless authentication for scalability and simplicity 
+
+
+
+Role Based Access Control (RBAC):
+-> admin, moderator, user
+-> different set of permissions for different roles
+-> you sign up on a platform and it assigns you a role
+-> in the subsequent requests, you attach the role in the token or the server can lookup your role in the database
+-> this role is deduced early in the request cycle and passed on to the next middleware 
+-> the server will now decide what resources you have access to based on that role
+
+
+
+Two important things:
+-> error message:
+  - sending appropriate error message in the authentication workflow
+  - it can provide attackers some clue
+  - never send specific messages or friendly messages 
+  - keep the message generic eg. authentication failed
+-> timing attacks:
+  - find the user using email/username, check if the account is locked or not, check the password
+  - if the authentication wokflow fails at the first step, you will get a faster response compared to it failing at the
+    third step where the password is correct. in this case, the response will have a delay. using that delay, attackers can
+    find out at what step the authentication failed and if the username was invalid or the password was invalid . they can use
+    this strategy to further strategize their attack plan 
+  - to prevent this, you have to introduce measures to equalize the response times
+  - you can use constant time operation using some cryptographic time comparison functions for password hashes
+  - they will ensure execution does not vary based on input similarity
+  - you can also simulate a response delay using your programming language so that the attackers cannot measure the timing
+    difference between the username failing and the password failing
 
 
 Securing Password:
