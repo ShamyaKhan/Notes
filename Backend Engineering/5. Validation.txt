@@ -1,0 +1,36 @@
+-> a set of rules or guidelines to keep in mind while designing api
+-> mostly related to data integrity and security
+
+
+
+-> in a typical backend architecture, we have different layers of execution
+-> bottom layer is called the repository layer which mostly deals with db connection and db query execution
+-> above that we have the service layer that deals with executing your business logic. all the functionalities that 
+   an api call usually has. a typical service method calls one or more methods from the repository layer
+-> above that we have the controller layer. it calls whatever method defined in the service layer. whatever data returned 
+   from the service method is returned to the user in the http connection 
+-> we separate out controller layer and service layer because we want to keep the http related stuff in a different layer
+   such as what error/success code to return, what format the data is expected to return in, validations. it deals with all
+   data that comes from client and all data that goes out to client. internally it calls the service layer which in turn might
+   call the repository layer
+-> validation and transformation happen at the point where data that is sent by client and the point where data reaches the
+   server (controller layer)
+
+
+Why validation?
+-> whatever data the user sent, eg. json payload, headers, path parameter, query parameter - we want them to be in the
+   expected format
+-> we want to ensure that before going into the service layer
+-> the validation pipeline is basically a middleware or utility function 
+-> we provide a particular schema that we want to validate against  
+
+
+Types of validation:
+-> Syntactic
+  - if the provided value satisfies the particular structure 
+  - the provided string was an email or not
+  - validating phone, email, date
+-> Semantic
+  - if the provided data makes sense or not
+-> Type validation
+  - if the data type of a field matches or not
