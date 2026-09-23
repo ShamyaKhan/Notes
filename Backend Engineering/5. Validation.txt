@@ -34,3 +34,24 @@ Types of validation:
   - if the provided data makes sense or not
 -> Type validation
   - if the data type of a field matches or not
+
+
+
+Transformation:
+-> before reaching controller layer, whatever data is sent by user, needs to go through validation & transformation pipeline
+-> transformation means we want to execute some operations on that data based on the success or failure of validation or
+   any other default execution
+-> /bookmarks?page=2&limit=20
+-> query parameters are string by default
+-> it's the servers responsibility to cast the data type into number
+-> this phase is called transformation
+-> the process of converting data into a desirable format
+-> we pair validation and transformation into a single pipeline so that all logic in the input data layer stays in same place
+
+
+
+Front-side validation vs Server-side validation:
+-> frontend validation is not for security or data integrity, it is for user experience 
+-> we want to give immediate feedback to the user that something is wrong with the data
+-> backend validation is about security and data integrity
+-> in server-side you have to be as strict and specific as possible 
