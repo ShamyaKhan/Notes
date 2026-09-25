@@ -1,0 +1,29 @@
+Start of the request:
+-> the moment our operating system forwards the http request to a particular port where the server is running
+-> after the request reaches our server, we have routing
+-> based on the routing algorithm, we map that request to a handler/controller
+-> handler is a predefined function that us supposed to the request of that API
+
+
+
+Handler/Controller:
+-> in a handler we receive at least two objects: request and response 
+-> we already know what API this client is trying to call
+-> now we want to take out different values so that we can process the request and send response accordingly
+-> at first, we have to deserialize the JSON object that you received into your native language format aka binding
+-> if deserialization fails or error occurs, we send a response with 400 status code - bad request and terminate
+-> then we validate data and optionally transform data
+-> in transformation pipeline, you can set default values for query parameters
+-> next the controller layer calls the service layer with all the data it has properly validated and transformed along
+   with necessary information such as authentication info, userId, permissions etc...
+-> ideally service layer should not deal with any kind of http related stuff or backend-frontend interaction
+-> if you take a look at your service method, then from one look you should not be able to tell that this is a function
+   being used in API
+-> a good pattern: your service layer should be in isolated manner, process data and return it
+-> then it calls the repository method for your database operations if needed, else do other operations eg. send email, notifications
+-> then the repository/database layer takes the data that needs to be inserted/fetched, requirements of data (sort, page, limit)
+   and constructs the database query and returns the result from database. one repository method should return only
+   one kind of data
+
+
+*** you should make all your query parameters optional in your API
