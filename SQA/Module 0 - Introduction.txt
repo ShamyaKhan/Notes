@@ -1,0 +1,428 @@
+Why care about software quality?
+-> poor quality - bugs, crashes, unhappy users
+-> good quality - trust, smooth experience
+-> SQA ensures software works as expected
+
+
+What is SQA?
+-> a process to make sure software meets standards
+-> includes planning, monitoring and improving quality
+
+
+Is SQA just testing?
+-> covers more than testing
+-> includes documentation, standards, audits
+-> testing is just a part 
+
+
+QA Roles Overview:
+-> QA Analyst/Tester
+-> QA Engineer
+-> Test Automation Engineer
+-> SDET (Software Development Engineer in Test)
+-> QA Lead/Manager
+
+
+Career path of a QA Analyst:
+(1) SQA Trainee: creates test cases and detects defects
+(2) Test Engineer: designs, executes and reviews test plans for intended software output
+(3) Senior SQA Engineer: supervises every stage and method applied in the software development lifecycle
+(4) Principal SQAE: provides consultancy and expertise on the latest QA techniques
+(5) Head QA: manages a test team, defines metrics, plans, test strategies and budgeting
+
+
+
+QA Analyst/Tester:
+-> Role: manual testing and bug reporting
+-> execute test cases
+-> validate requirements
+-> report bugs (JIRA, spreadsheet)
+
+
+QA Engineer:
+-> Role: manual testing and automation
+-> manual testing
+-> automation
+-> API, DB testing
+
+
+Test Automation Engineer:
+-> Role: automating repetitive test cases
+-> write scripts (Selenium, Playwright)
+-> run regression suites
+-> maintain test frameworks
+
+
+SDET (Software Development Engineer in Test):
+-> Role: strong coding + advanced automation
+-> build automation frameworks
+-> integrate tests with CI/CD
+-> performance monitoring
+
+
+QA Lead/Manager:
+-> Role: team management and QA strategy
+-> test planning and estimations
+-> bug triage meetings
+-> reporting to stakeholders
+
+
+Common QA Activities:
+(1) requirement analysis
+(2) test case design
+(3) test execution (manual/automation)
+(4) defect logging and tracking
+(5) reporting and communication
+(6) test closure activities
+
+
+QA Career Path:
+(1) QA Intern
+(2) QA Analyst
+(3) QA Engineer
+(4) Senior QA Engineer
+(5) Test Automation Engineer / SDET
+(6) QA Lead
+(7) QA Manager
+
+
+
+Popular Certifications:
+-> ISTQB (International Software Testing Qualifications Board)
+  - Levels: Foundation, Advanced, Expert
+  - Globally recognized
+-> CSTE (Certified Software Tester)
+  - Focus: QA process and management
+  - Useful for mid-level testers
+
+
+QA (Quality Assurance):
+-> it's about prevention - establishing robust processes to avoid mistakes before they even happen
+-> it's a process level activity that sets the framework for quality
+-> define coding standards
+-> implement agile methodologies
+-> establish comprehensive documentation
+
+
+QC (Quality Control):
+-> focuses on checking the final product against predefined standards
+-> it's a product level activity that identifies defects after they've occurred
+-> includes activities like code reviews, functional testing, user acceptance testing (UAT) 
+
+
+Testing:
+-> hands-on process of directly examining the product for defects
+-> it's an integral part of quality control, providing empirical data on product performance
+-> includes unit testing, integration testing, performance testing, security testing
+-> all aimed at finding and logging bugs
+
+
+Key Differences:
+      Quality Assurance (QA)         -              Quality Control (QC)                -                   Testing
+-------------------------------                 -----------------------------                   --------------------------------------
+(1) prevention focused                             inspection focused                                    defect finding
+(2) proactive steps to avoid issues                reactive checks on the output                      executes tests to identify bugs
+(3) process oriented                               product oriented                                  part of quality control
+(4) ensures correct procedures are followed    verifies the final product's quality    a specific activity within the broader QC function
+
+
+
+
+
+The Complete Quality Approach:
+-> relying on just one aspect leaves significant gaps, leading to costly reworks and customer dissatisfaction
+-> only QA reduces mistakes but does not guarantee a defect-free product
+-> only QC identifies issues late in the cycle, making fixes expensive and time-consuming 
+-> only testing finds problems but does not address the root cause, leading to recurring issues
+-> together QA, QC and Testing form a synergistic framework that ensures software is not only functional but also reliable,
+   performant and truly user-friendly
+-> this integrated approach builds trust and delivers consistent value
+
+
+Summary:
+-> QA ensures the process is right. Focuses on prevention and setting up robust development methodologies
+-> QC ensures the product is right. Involves inspecting the final output against quality standards
+-> Testing ensures the product works as intended. Directly identifies defects through execution and validation
+
+
+
+Software Quality Factors:
+-> Functionality: does what it should
+-> Reliability: works consistently
+-> Usability: easy for users
+-> Efficiency: fast and resource friendly
+-> Maintainability: easy to fix and upgrade
+-> Portability: runs across platforms
+
+
+Waterfall:
+-> fixed requirements upfront
+-> sequential phases (req - design - dev - test)
+-> customer mostly involved at start/end
+-> testing comes late
+-> best for stable projects
+
+
+Agile:
+-> iterative, adaptive, customer-driven
+-> small, frequent deliveries
+-> testing built into every sprint
+-> cross-functional team collaboration
+-> best for changing requirements
+
+
+
+Waterfall vs Agile:
+                      Waterfall                                                                  Agile
+-----------------------------------------------------                    --------------------------------------------------------
+(1) linear, sequential, rigid, big release at end                        iterative, flexible, frequent releases, feedback-driven
+(2) predictable docs, late defect detection                              early feedback, continuous testing, faster fixes
+
+
+
+
+
+Why SQA Mattes in SDLC:
+-> without SQA:
+  - defects may be detected late, increasing cost and complexity to fix
+  - inconsistent standards can lead to unstable or insecure products
+  - release timeline may slip due to unplanned rework
+-> with SQA:
+  - issues are detected and resolved early in the lifecycle
+  - development follows defined, measurable quality standards
+  - end product consistently meets functional and non-functional requirements
+
+
+SQA Across SDLC Phases:
+-> Requirement Analysis: 
+  - validate clarity, consistency and testability of requirements
+  - product owner, project manager, business analyst, CTO
+-> Design:
+  - ensure architecture and design meet performance, scalability and security standards
+  - system architect, UI/UX designer
+-> Development: 
+  - apply coding standards, conduct peer reviews, track compliance to processes
+  - frontend developers, backend developers
+-> Testing: 
+  - execute functional, performance, security and usability checks against requirements
+  - solutions architect, QA engineer, tester, DevOps
+-> Deployment:
+  - verify release, monitor, validate, test
+  - data administrator, DevOps
+-> Maintenance: 
+  - verify release, monitor, validate, test
+  - users, testers, support managers
+
+
+
+SQA vs Testing:
+			Testing							       SQA
+-------------------------------------------------------	       ---------------------------------------------------------------
+(1) detects defects in final or intermediate product                framework to prevent defects throughout SDLC
+(2) reactive approach: finds problems after they occur              proactive approach: enforces quality at every stage
+(3) reacts to problems                                              prevents problems
+
+
+QA's Direct Impact on Product Quality:
+-> Reduced defect density: lower number of bugs per release
+-> Higher stability: fewer crashes and performance bottlenecks
+-> Improved maintainability: easier updates, less technical debt
+-> Greater customer trust: reliable product performance over time
+-> Optimized release cycles: fewer delays and smoother deployments
+
+
+
+Scrum Framework:
+-> agile based framework for iterative and incremental development
+-> emphasizes collaboration, adaptability and continuous delivery
+-> work is organized into sprints (1 - 4 weeks)
+
+
+Scrum Roles:
+-> Scrum Master: facilitates scrum, removes impediments, ensures scrum practices are followed
+-> Product Owner: defines product vision, maintains backlog, prioritizes features
+-> Development Team: cross-functional team building product increments. Includes developers, QA, designers
+
+
+QA in Scrum:
+-> QA participates in planning, reviews and testing with sprints
+-> performs continuous testing, regression checks and quality feedback
+
+
+Scrum Ceremonies Overview:
+-> scrum ceremonies ensure transparency, inspection and adaptation
+-> Key ceremonies:
+(1) Sprint Planning:
+  - define sprint goal and backlog items to work on
+  - team estimates effort and commits to task
+  - QA role: participate in task estimation, clarify acceptance criteria, prepare test cases
+(2) Daily Standups:
+  - short daily meeting (~15 mins)
+  - each member answers: what did I do yesterday, what will I do today, any blockers
+  - QA role: update on test progress, raise blockers, coordinate with devs
+(3) Sprint Review:
+  - demo completed work to stakeholders
+  - collect feedback for improvements
+  - QA role: validate completed features, ensure acceptance criteria met, report defects
+(4) Sprint Retrospective:
+  - team reflects on sprint: what went well, what can be improved, action items for next sprint
+  - QA role: suggest process improvements, highlight testing challenges, contribute to quality enhancement 
+
+
+QA's Role Across Scrum:
+-> active in planning, testing, demos and retrospectives
+-> ensures continuous quality, early defect detection and feedback integration
+-> collaborates with devs and product owner to maintain high standards
+
+
+
+SDLC:
+-> a structured approach that defines the phases of software development, ensuring efficiency, quality and predictability
+
+
+Requirement Analysis:
+-> Gathering and analyzing customer needs
+-> Flow:
+  - business analysts and stakeholders define expectations
+  - requirements documented in SRS (Software Requirement Specification)
+-> Real-life example (food delivery app):
+  - users can search for restaurants
+  - add food items to cart
+  - pay via mobile wallets
+
+Design:
+-> Creating system architecture and UI/UX models
+-> Flow:
+  - high level design (HLD) and low level design (LLD) created
+  - database schema, APIs, user interface mockups defined
+-> Real-life example (food delivery app):
+  - UI wireframes for search, cart and payment screens
+  - database design for users, restaurants and orders
+
+Development:
+-> Actual coding based on design specifications
+-> Flow:
+  - developers build modules
+  - version control tools (git) manage code
+  - unit testing ensures module-level correctness
+-> Real-life example (food delivery app):
+  - building the restaurant search algorithm
+  - integrating payment gateway for wallet transactions
+
+
+Testing:
+-> Ensuring software works as intended
+-> Flow:
+  - QA team tests functionalities, performance, security
+  - bugs reported, fixed and re-tested
+  - test cases, regression and automation applied
+-> Real-life example (food delivery app):
+  - testing card updates when multiple items are added
+  - validating payment gateway error handling (e.g. insufficient balance)
+
+
+Deployment:
+-> Releasing software for end users
+-> Flow:
+  - application deployed in production environment
+  - release management and monitoring initiated
+-> Real-life example (food delivery app):
+  - publishing the app on play store and apple store
+  - deploying backend on AWS cloud servers
+
+
+Maintenance:
+-> Continuous support, updates and improvements
+-> Flow:
+  - fix bugs discovered post-release
+  - add new features based on user feedback
+  - ensure scalability and performance improvements
+-> Real-life example (food delivery app):
+  - adding a "Track Order Live" feature after launch
+  - regular bug fixes for login or cart issues
+
+
+Importance of SDLC:
+-> without SDLC:
+  - projects face delays and scope creep
+  - poor communication leads to mismatched expectations
+  - quality suffers with unstructured development
+-> with SDLC:
+  - clear roadmap ensures predictable timelines
+  - standardized processes lead to higher quality
+  - continuous monitoring supports smoother maintenance
+  - business goals align with customer satisfaction
+
+
+Waterfall Model Overview:
+-> linear, sequential
+-> phases: requirement, design, development, testing, deployment, maintenance
+-> each phase must be completed before the next begins
+
+Waterfall Pros:
+-> clear structure and documentation
+-> easy to manage and measure progress
+-> works well for projects with fixed requirements
+
+Waterfall Cons:
+-> inflexible to changes
+-> late defect detection can be costly
+-> not ideal for evolving for uncertain requirements
+-> feedback from users comes late in the process
+
+Waterfall Use Cases:
+-> government or banking software
+-> projects with well-understood technology and low risk of change
+-> payroll management system, invoicing software
+
+
+Agile Overview:
+-> iterative, incremental 
+-> focuses on flexibility, collaboration and customer feedback
+-> work is divided into sprints delivering small, usable increments
+
+
+Agile Manifesto Values:
+-> individuals and interactions over processes and tools
+-> working software over comprehensive documentation
+-> customer collaboration over contract negotiation
+-> responding to change over following a plan
+
+
+Agile Principles and Mindset Shift:
+-> Content:
+  - deliver working software frequently
+  - welcome changing requirements even late in development
+  - businessmen and developers collaborate daily
+  - build projects around motivated individuals
+  - continuous attention to technical excellence
+  - simplicity is essential (maximize work not done)
+-> Mindset Shift:
+  - from process centric (waterfall) to value centric and adaptive (agile)
+  - focus on continuous learning, collaboration and responding to change
+
+Agile Pros:
+-> flexible, adaptive to change
+-> frequent delivery builds customer trust
+-> encourages collaboration and communication
+
+
+Agile Cons:
+-> requires experienced, motivated team
+-> less predictability in timelines and scope
+-> heavy reliance on stakeholder availability
+-> can be challenging in very large, complex projects
+
+
+
+Waterfall vs Agile Comparison:
+             Aspect                                             Waterfall                                     Agile
+----------------------------------------      ---------------------------------------------    ------------------------------------
+             Approach 					  linear, sequential			   iterative, incremental
+            Flexibility						low					  high
+           Documentation					heavy					 light
+        Customer Feedback				        late				       continuous
+             Best For                                     fixed requirements                         evolving requirements
+            Mindset                                         process driven                        value & collaboration driven
+    
+    
