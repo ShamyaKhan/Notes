@@ -154,3 +154,11 @@ Generics:
 Inheritance vs Composition:
 -> inheritance is characterized by an "is a" relationship between two classes
 -> composition is characterized by a "has a" relationship between two classes
+
+
+
+
+
+# Favor object composition over class inheritance (Design Pattern, page 20)
+# It means to favor delegation as a pattern to implement composition
+# With this pattern, we save some class that has a reference to another object
