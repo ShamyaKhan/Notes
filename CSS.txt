@@ -224,6 +224,72 @@ Color Theory:
 
 
 
+Overflow:
+-> the way elements handle content that exceeds or overflows the size of the containing element
+-> two-dimensional, horizontal & vertical
+
+
+Transform:
+-> allows you to modify the visual presentation of elements without affecting the layout of other elements
+-> enables you to apply various transformations such as rotating, scaling, skewing or translating them in 2D or 3D space
+-> works by applying a mathematical transformation to an elements coordinate system
+-> accessibility considerations:
+  - screen reader order
+  - text scaling
+  - motion and depth perception
+  - hiding content properly
+  - target size for interactive elements
+
+
+
+CSS Box Model:
+-> defines how html elements are structured and positioned
+-> every element is surrounded by a box
+-> box consists of four elements: 
+  - content area: innermost part of the box. space that contains the actual content
+  - padding: space between the content area and the border
+  - border: outer edge or outline of an element
+  - margin: space outside the border of an element
+
+
+Margin Collapsing:
+-> a behavior that occurs when the vertical margins of adjacent elements overlap
+-> resulting in a single margin equal to the larger of the two
+-> the larger margin wins and determines the space between elements
+-> applies only to vertical margins
+
+
+Box Sizing:
+-> controls how the width and height of elements are calculated
+-> content-box: does not include padding, border or margin when determining the height and width (default)
+-> border-box: includes padding and border (not margin) when setting width and height of an element
+
+
+
+CSS Reset:
+-> a stylesheet that removes all or some of the default formatting that the web browsers apply to html elements
+-> purpose: to establish a consistent baseline for styling, reducing browser specific behaviors
+-> popular third-party browser reset: Normalize.css
+
+
+
+CSS Filter:
+-> allows you to apply graphical effects elements on a web page
+-> useful for adjusting the visual presentation of images, backgrounds and even text without modifying the original asset 
+-> selector { filter: function(amount); }
+-> some common filter functions: blur, brightness, grayscale, sepia, hue-rotate, contrast, invert, saturate
+-> has the ability to combine multiple effects 
+-> img { filter: contrast(150%) brightness(110%) sepia(30%); }
+
+
+
+CSS Flexbox:
+-> a one-dimensional layout model that allows you to arrange elements in rows or columns within a container
+-> you can also control their order and orientation
+-> two key concepts: flex container and flex item
+-> some common flex properties: flex-direction, justify-content, align-items, flex-wrap
+-> flex model defines how flex items are arranged within a flex container
+-> every flex container has two axes: main axis, cross axis
 
 
 
