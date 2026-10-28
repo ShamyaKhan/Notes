@@ -20,10 +20,33 @@ Handler/Controller:
 -> if you take a look at your service method, then from one look you should not be able to tell that this is a function
    being used in API
 -> a good pattern: your service layer should be in isolated manner, process data and return it
--> then it calls the repository method for your database operations if needed, else do other operations eg. send email, notifications
+-> then it calls the repository method for your database operations if needed, else do other operations eg. send email,
+   call external APIs, send notifications
 -> then the repository/database layer takes the data that needs to be inserted/fetched, requirements of data (sort, page, limit)
    and constructs the database query and returns the result from database. one repository method should return only
    one kind of data
+-> service layer also has the responsibility to orchestrate which means it can take different data returned by different
+   repository methods and it can merge those data or take necessary fields for different results and return that
+   data to the handler
+-> a service layer can use multiple repository methods and can do different operations to merge different types of data 
+   from database
+-> the actual processing of the API happens in the service layer
+-> a repository method should do one single thing - fetch/insert/delete some data depending on the requirements
+-> handlers deal with input/output data formats
 
+
+
+How controller layer controls the data flow:
+-> binding of the data from the request
+-> validations and transformations
+-> call service layer
+-> send response (success/error) with appropriate status code
+
+
+
+Middleware:
+-> the moment operating system forwards the request to the entry point of the server, from that moment on we have different
+   functions in between until the response is sent back to client
+-> these functions are executed somewhere in the middle boundaries of different execution contexts
 
 *** you should make all your query parameters optional in your API
