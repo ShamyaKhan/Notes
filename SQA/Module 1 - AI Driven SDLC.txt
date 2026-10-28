@@ -1,0 +1,48 @@
+What is Software Quality Assurance?
+-> a planned, systematic set of activities that ensure software meets defined quality standards
+-> focuses on the process used to build software, not just the final product
+-> goal is to prevent defect before they happen, not just catch them at the end
+-> applies across the entire life-cycle, from requirements to production support
+
+
+Quality: Meeting customer expectations
+Assurance: Preventing defects/bugs
+
+
+Why Software Quality Matters?
+-> Trust & Reputation: a single major bug (payment failure) can break years of customer trust in minutes
+-> Revenue Protection: downtime and bugs in ecommerce or banking apps directly translate into lost revenue
+-> Security & Compliance: regulated industries (banking, healthcare) face legal penalties for quality failures
+-> User Retention: poor quality is the first reason users abandon an app after one bad experience
+-> Long-Term Cost: quality debt compounds: a quick and dirty release today is expensive to fix later
+
+
+SQA in SDLC:
+-> Requirements: QA reviews requirements for ambiguity, testability and completeness before coding starts
+-> Design: QA validates architectures and UX decisions against non-functional needs like performance and security
+-> Development: unit tests, code reviews and static analysis catch defects while code is still being written
+-> Testing: functional, regression, integration and API testing validate the system as a whole
+-> Deployment: smoke test and deployment checks confirm the release is safe to go live
+-> Maintenance: production monitoring and regression testing protect quality as the system evolves
+
+
+QA vs QC vs Testing:
+
+     Aspect                         Quality Assurance                     Quality Control                       Testing
+---------------------        ----------------------------------     ---------------------------------    -------------------------------
+   Focus			Process oriented 		       Product oriented                    Execution oriented
+   Goal				Prevent defects			       Identify defects			 Find bugs & verify behavior
+   Approach			Proactive				Reactive				Reactive
+ Activities	   Audits, standards, process reviews     Inspection, reviews of the product    Test case execution, exploratory testing
+Responsibility 			Entire team			        QA/QC team                    Testers / Automation engineers
+Example           Defining a code review checklist    Reviewing a build against the checklist    Running login test cases on that build
+
+
+
+
+
+
+
+
+AI Powered Testing Tools:
+-> used across the SDLC for requirement analysis, test case generation, code review and defect triage 
