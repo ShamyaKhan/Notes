@@ -292,6 +292,66 @@ CSS Flexbox:
 -> every flex container has two axes: main axis, cross axis
 
 
+
+Float:
+-> a technique originally designed to allow text to wrap around an element such as an image
+-> when an element is floated, it's taken out of the normal document flow and pushed to the left or right of its container
+-> the content that follow will wrap around the floated element, filling the remaining space
+
+
+Positioning:
+-> allows to control how elements are laid out on a page
+-> static: by default elements are statically positioned, following the normal flow of the document
+-> relative: allows an element to be shifted from its normal position without disrupting the document flow
+-> absolute: 
+  - allows you to take an element out of the document flow, making it behave independently from other elements
+  - placed in its own layer, completely separate from everything else in the layout
+  - useful for creating floating UI features e.g. modals, tooltips, dropdown menus, which can overlap other elements
+  - by default, absolutely positioned elements are placed relative to the closest positioned ancestor
+  - if no positioned ancestor is found, the element will be positioned relative to the initial containing block, 
+    which is usually the browser's viewport
+-> fixed:
+  - element is removed from the normal document flow and placed relative to the viewport
+  - it stays in the same position even when the user scrolls
+  - often used for elements like headers or navigation bars that need to remain visible at all times
+-> sticky:
+  - behaves as a hybrid between relative and fixed positioning
+  - initially, the element behaves as though it's positioned relatively, staying within the document flow
+  - once the user scrolls the element past a certain point, it "sticks" to the viewport (usually the top) 
+    and behaves as though it is fixed
+  - great for creating elements like sticky navigation bars, that become fixed once the user scrolls to a certain position
+
+
+
+Differences between absolute, fixed and sticky positioning:
+-> a positioning removes an element from the document flow and positions it relative to the nearest positioned ancestor, 
+   or the initial containing block if none exists. The element stays in that position regardless of scrolling
+-> fixed positioning also removes the element from the document flow but fixes it relative to the viewport, 
+   meaning it will stay visible in the same spot even as the page is scrolled
+-> sticky positioning keeps the element in the normal flow initially but allows it to stick in place after scrolling 
+   past a defined threshold
+
+
+
+Z-Index:
+-> used to control the vertical stacking order of positioned elements that overlap on the page
+-> when multiple elements are stacked on top of each other, the z-index value determines which element appears on top
+-> the higher the z-index value, the closer the element is to the viewer
+-> lower values place the element farther back in the stack
+-> elements with higher z-index values will be placed above those with lower values
+-> only works on elements that are positioned e.g. relative, absolute, fixed
+-> default value is auto which places the element in the default stacking order
+-> useful for controlling how overlapping elements behave in complex layouts, such as modals, pop-ups, or tooltips 
+
+
+
+Attribute Selectors:
+-> allows you to target HTML elements based on their attributes
+-> it means you can apply styles to elements that have specific attributes or even certain values for those attributes
+-> useful when you want to style elements dynamically or when class names alone don't provide enough specificity
+
+
+
 Typography:
 -> the art of choosing the right fonts and format to make texts visually appealing and easy to read
 -> the art and technique of arranging type to communicate effectively
