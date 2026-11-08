@@ -352,6 +352,107 @@ Attribute Selectors:
 
 
 
+
+Responsive Web Design:
+-> an approach to web development that aims to create websites that provide an optimal viewing and interaction experience 
+   across a wide range of devices, from desktop computers to mobile phones
+-> the core principle of responsive design is adaptability: the ability of a website to adjust its layout and content 
+   based on the screen size and capabilities of the device it's being viewed on
+
+
+
+Core Components of Responsive Web Design:
+-> fluid grids use relative units like percentages instead of fixed units like pixels, allowing content to resize and 
+   reflow based on screen size
+-> flexible images are set to resize within their containing elements, ensuring they don't overflow their containers 
+   on smaller screens
+-> media queries allow developers to apply different styles based on the characteristics of the device, primarily the 
+   viewport width
+
+
+
+Other CSS Features for Responsive Design:
+-> calc() allows for mixing units and performing calculations
+-> srcset attribute and picture element in HTML5 allow for serving different image files based on device capabilities
+
+
+
+
+
+Media Queries:
+-> allows developers to apply different styles based on the characteristics of the user's device or browser
+-> provide a way to tailor the presentation of content to a variety of devices without changing the content itself
+-> consists of a media type and one or more expressions that check for specific conditions
+-> if these conditions are true, the corresponding styles are applied
+-> common media types:
+  - all:  suitable for all devices, this is the default if no media type is specified
+  - print: intended for paged material and documents viewed on a screen in print preview mode
+  - screen: intended primarily for screens
+-> common media features:
+  - width and height
+  - aspect-ration
+  - orientation
+  - resolution
+  - hover
+  - prefers-color-scheme
+  
+
+
+
+
+Media Breakpoints:
+-> specific points in a website's design where the layout and content adjust to accommodate different screen sizes
+-> implemented using media queries
+
+
+
+Popular Set of Breakpoints:
+-> Small devices (smartphones): up to 640px
+-> Medium devices (tablets): 641px to 1024px
+-> Large devices (desktops): 1025px and larger
+
+
+A More Granular Approach:
+-> Extra small devices: up to 576px
+-> Small devices: 577px to 768px
+-> Medium devices: 769px to 992px
+-> Large devices: 993px to 1200px
+-> Extra large devices: 1201px and larger
+
+
+
+A More Fluid Approach:
+-> Extra small device: under 576px
+-> Small device: more than or equal to 576px
+-> Medium device: more than or equal to 768px
+-> Large device: more than or equal to 992px
+-> Extra large device: more than or equal to 1200px
+-> Extra extra large device: more than or equal to 1400px
+
+
+
+Mobile-First Approach:
+-> a design philosophy and development strategy in responsive web design that prioritizes creating websites for mobile 
+   devices before designing for larger screens
+-> the core principle is that the most essential content and functionality are available and optimized for the smallest 
+   screens first
+-> forces designers and developers to focus on the core content and features, leading to a more streamlined and efficient 
+   user experience across all devices
+
+
+
+CSS Custom Properties / CSS Variables:
+-> entities defined by CSS authors that contain specific values to be reused throughout a document
+-> allows for more efficient, maintainable, and flexible stylesheets
+
+
+@property Rule:
+-> allows developers to define custom properties with greater control over their behavior, including how they animate
+   and their initial values
+-> provides a way to enhance the functionality of CSS custom properties and offers more flexibility in the application
+
+
+
 Typography:
 -> the art of choosing the right fonts and format to make texts visually appealing and easy to read
 -> the art and technique of arranging type to communicate effectively
