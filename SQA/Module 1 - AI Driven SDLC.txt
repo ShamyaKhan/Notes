@@ -41,6 +41,28 @@ Example           Defining a code review checklist    Reviewing a build against 
 
 
 
+Objectives of Software Quality Assurance:
+-> Prevent Defects: catch issues at the earliest possible point through reviews, standards and static analysis
+-> Improve Customer Satisfaction: deliver software that is reliable, usable, and meets real user needs
+-> Reduce Development Cost: avoid the exponential cost of late-stage fixes and emergency patches
+-> Risk Reduction: identify and mitigate business, security and operational risks before release
+-> Process Improvement: feed defect and quality data back into the team process for continuous improvement
+-> Compliance: meet regulatory, legal and industry standards, critical in banking and fin-tech
+
+
+
+Understanding Quality Models:
+-> McCall's Quality Factors (1977):
+  - one of the earliest formal quality models, grouped into three categories
+  - product operation, product revision, product transition
+  - introduced classic factors like reliability, efficiency and usability
+  - still referenced today as the foundation modern standards were built on
+-> ISO/IEC 25010 (Modern Standards):
+  - the current international standard for software product quality (SQuaRE series)
+  - defines 8 core characteristics: functional sustainability, performance efficiency, compatibility, usability, 
+    reliability, security, maintainability, portability
+  - used today for defining measurable, testable non-functional requirements 
+
 
 
 
