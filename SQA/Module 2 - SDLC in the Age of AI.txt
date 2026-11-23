@@ -1,0 +1,230 @@
+What is SDLC?
+-> a structured process teams follow to plan, build, test, deliver and maintain software
+-> example: customer needs a fund transfer feature, developer builds it, QA tests it, releases it, later
+   bugs are fixed and new improvements are added
+
+
+Importance of SDLC in Software Projects:
+-> Clear Plan: everyone knows scope, tasks and deadlines
+-> Better Quality: testing and reviews are built into the process
+-> Lower Cost: mistakes found early are cheaper to fix
+-> Risk Control: problems are spotted and managed early
+-> Team Alignment: developers, QA, BA and clients share one process
+-> Documentation: easy tracking, audits and knowledge transfer
+
+
+Phases of SDLC:
+-> Requirement Analysis: understand what the customer needs
+-> Design: plan how the system will be built
+-> Implementation: write the code
+-> Testing: check if it works and defect-free
+-> Deployment: release to production
+-> Maintenance: fix, improve and support
+
+
+
+Requirement Analysis:
+-> The first and most important phase: the team talks to stakeholders to learn what the customer actually wants
+-> Key Activities:
+  - meet clients and stakeholders
+  - gather business and user requirements
+  - define functional and non-functional requirements
+  - identify system constraints
+  - prepare BRD and SRS
+  - review and approve requirements
+-> Documents:
+  - BRD, SRS, Use Cases
+-> Food App Example:
+  - customer wants food ordering, online payment and live order tracking
+
+
+
+Design:
+-> Defines how the system will be built. Developers create the blueprint before coding
+-> Key Activities:
+  - HLD: overall architecture and modules
+  - LLD: module logic, APIs, database
+  - Database design
+  - API design
+  - UI/UX design
+-> HLD vs LLD
+  - HDL: whole system (architecture), how is the system designed?
+  - LLD: specific module, how is the module implemented
+-> Food App Example:
+  - figma screens, database schema, API architecture
+
+
+
+
+Implementation:
+-> Developers turn the approved design into working software by writing source code
+-> Key Activities:
+  - coding
+  - code review
+  - unit testing
+  - version control (git)
+  - integration testing
+  - CI/CD integration
+-> Output:
+  - working, reviewed and unit-tested code
+-> Food App Example:
+  - developers build the ordering, payment and tracking features
+
+
+
+Testing:
+-> Makes sure the software meets the approved requirements and has no critical defects before release
+-> Key Activities:
+  - test planning, test case design, execution
+  - defect reporting, retesting, regression
+  - automation testing
+  - performance and security testing
+  - user acceptance testing (UAT)
+-> Outputs:
+  - test reports, defect logs, release sign-off
+-> Food App Example:
+  - functional, payment, load, security and UAT testing
+
+
+
+Deployment:
+-> After testing and approval, the application goes live for end users
+-> Key Activities:
+  - production release
+  - database migration
+  - configuration updates
+  - smoke testing
+  - monitoring
+  - rollback planning
+-> Output:
+  - live application in production
+-> Food App Example:
+  - software is published to the server
+
+
+
+
+Waterfall Model:
+-> one of the oldest SDLC models
+-> linear and sequential
+-> each phase must be completed, reviewed and approved before the next phase begins
+-> requirement, design, implementation, testing, deployment, maintenance
+-> characteristics: linear flow, fixed phases, approval gate at each step, strong documentation, no going back
+-> Advantages:
+  - simple and easy to understand
+  - clear phases and deliverables
+  - strong documentation
+  - easy to manage and track
+  - good for stable requirements
+  - supports compliance and audits
+-> Disadvantages:
+  - hard to accommodate change
+  - testing start only after development
+  - limited customer involvement
+  - late defects cost more to fix
+  - no working software until the end
+  - poor fit for AI driven projects
+
+
+
+
+QA Involvement in Waterfall:
+-> Requirements: review requirements for clarity and testability; start RTM
+-> Design: review HLD/LLD; draft test strategy and plan
+-> Implementation: coding, code review, unit testing, integration testing
+-> Testing: execute tests, report defects, retest, regression, UAT support
+-> Deployment: smoke test before production, verify release
+-> Maintenance: regression test for every fix and update
+
+** Main testing happens late, so QA finds defects when they are most expensive to fix
+
+
+Where AI assists in each SDLC Phase:
+-> Requirements: summarize meetings, draft user stories, spot unclear requirements
+-> Design: suggest architecture options, drafts API/DB designs and diagrams
+-> Implementation: code assistants, AI code review, unit test generation
+-> Testing: generate test cases, self-healing locators, defect triage
+-> Deployment: release risk checks, smarter CI/CD pipelines
+-> Maintenance: log detection, support chatbots
+
+
+AI Powered Requirement Analysis Tools:
+-> Draft and Refine: LLM assistants (Claude, ChatGPT) turn notes into user stories, SRS drafts and acceptance criteria
+-> Manage Work: JIRA and confluence AI features summarize tickets and organize requirements
+-> Check Quality: ask AI to find ambiguous, missing or conflicting requirements and suggest test scenarios
+
+** AI output is a draft; a human must always review and approve it
+
+
+Limitations of Sequential Models in AI Driven Projects:
+-> AI models learn from data, so everything is hard to plan from the start
+-> testing at the end may find problems too late
+-> there is no regular feedback during development
+-> AI models need continuous training and monitoring
+-> Agile work better for AI projects
+
+
+
+
+What Agile Gives Us:
+-> Main Objectives:
+  - deliver software faster
+  - adapt to changing requirements
+  - get regular customer feedback
+  - work in small increments
+  - find and fix bugs quickly
+-> Benefits:
+  - faster delivery
+  - better customer satisfaction
+  - easy to handle changes
+  - continuous testing
+  - reduced risk
+
+
+12 Agile Principles:
+-> Customer satisfaction first
+-> Welcome changing requirements
+-> Deliver frequently
+-> Businessmen and developers together 
+-> Build around motivated people
+-> Face-to-face communication
+-> Working software is progress
+-> Sustainable development
+-> Technical excellence
+-> Simplicity
+-> Self-organizing teams
+-> Continuous improvement
+
+
+Agile vs Waterfall:
+
+          Aspect                                      Waterfall                                     Agile
+----------------------------------         ------------------------------------------      ---------------------------------------
+Process						Sequential					Iterative
+Requirements					Fixed at the start				Can change anytime
+Delivery					Once, at the end				Small, frequent releases
+Testing						Mostly at the end				In every sprint
+Customer feedback				Usually at the end				Continuous
+Risk						Higher						Lower
+Flexibility					Low						High
+QA involvement					After development				From the beginning
+
+
+
+
+Key Agile Methodologies:
+-> Agile is an approach, not a single method
+-> Scrum:
+  - a widely used framework built around fixed-length sprints
+  - Sprint
+  - Product Backlog
+  - Sprint Backlog
+  - Daily Standup
+  - Sprint Review
+  - Retrospective
+-> Kanban:
+  - a visual workflow with continuous flow; no sprints required
+  - To Do
+  - In Progress
+  - Testing
+  - Production
