@@ -1,0 +1,243 @@
+STLC:
+-> defines what QA does from the moment requirements are received until testing is completed and release is closed
+-> example: 
+  - a bank wants to develop a virtual account creation feature
+  - requirement: a maker can create a virtual account by providing a valid customer name, mobile number 
+    and collection account number
+
+
+QA starts from the requirements and asks:
+-> is the requirement clear?
+-> what are the validations?
+-> what happens with invalid data?
+-> what are the boundary conditions?
+-> what should happen if the company is inactive?
+-> what happens if the account number is duplicated?
+
+
+
+SDLC vs STLC:
+
+        	                  SDLC							    STLC
+	          -----------------------------------------                 ---------------------------------------------
+Scope			The overall software development process		The software testing process
+People			Developers, QA, BA, DevOps and others			Mainly the QA/Testing team
+Starts from		Business requirements					Testable requirements
+Focus			Building the software, including development		Validation and verification
+Ends with		Maintenance / Release cycle				Test closure
+
+
+
+Flow of STLC:
+-> Requirement Analysis
+-> Test Planning
+-> Test Design
+-> Environment Setup
+-> Execution
+-> Defect Reporting and Tracking
+-> Closure
+
+
+Phase 1: Requirement Analysis
+-> QA studies the requirements to understand:
+  - what needs to be tested?
+  - what are the business rules?
+  - what are the validations?
+  - what are the positive scenarios?
+  - what are the negative scenarios?
+  - what are the boundary conditions?
+  - which requirements are unclear?
+-> Example - requirement: mobile number must contain 11 digits
+
+
+Phase 2: Test Planning
+-> After understanding the requirements, QA decides how testing will be performed
+  - Testing scope
+  - Testing types
+  - Testing approach
+  - Resources
+  - Timeline
+  - Tools
+  - Automation strategy
+  - Risks
+-> Example: Banking Application Testing Types
+  - Functional Testing
+  - Integration Testing
+  - Regression Testing
+  - API Testing
+  - Security Testing
+  - Performance Testing
+  - UI Testing
+  - Automation Testing
+
+
+
+Phase 3: Test Case Design
+-> QA converts requirements into test scenarios and test cases
+-> Example: user should be able to create a virtual account using valid information
+-> Positive test cases:
+  - create VA with valid data
+  - create VA with minimum valid data
+  - create VA with maximum valid data
+-> Boundary test cases:
+  - VA must be 17 digits (16 digits: below limit, 17 digits: above limit)
+  - Mobile number must be 11 digits (10 digits: below limit, 12 digits: above limit)
+-> Negative test cases:
+  - empty customer name
+  - invalid mobile number
+  - invalid account number
+  - duplicate virtual account
+  - invalid company
+  - inactive company
+
+
+
+Phase 4: Test Environment Setup
+-> Before testing starts, QA prepares the environment and checks that everything is ready
+-> Environment Components:
+  - application
+  - test server
+  - database
+  - API
+  - frontend
+-> QA verifies:
+  - application is deployed
+  - database is accessible
+  - required APIs are available
+  - test users exist
+  - required test data exists
+  - configuration is correct
+  - required services are running
+-> Readiness check
+
+
+
+
+Phase 5: Test Execution
+-> Run the planned tests
+  - run the test cases
+  - compare actual vs expected results
+  - mark each case pass or fail
+
+
+
+
+Phase 6: Defect Reporting and Tracking
+-> Make every failure visible
+  - log defects with steps and evidences
+  - set severity and priority
+  - track each defect until it is closed
+
+
+
+Phase 7: Test Closure
+-> Finish and sign off
+  - confirm exit criteria are met
+  - prepare the test summary and report
+  - capture lessons learned
+
+
+
+Bug Life Cycle:
+
+                       Duplicate. Rejected
+		       Deferred. Not a bug     (not a valid defect> It leaves the cycle here)
+				^
+                                |
+       New  ->  Assigned  ->  Open  ->  Fixed  ->  Pending Retest  ->  Retest  ->  Verified  ->  Closed
+				^					 |
+				|					 |
+				|--------------------------------------Reopened  (fix failed the retest? The bug is reopened
+										    and returns to open)
+
+
+
+AI Assisted Problem Statement:
+-> Requirement: duplicate mappings shall be prevented for master account relationships
+-> Ask AI: convert this requirement into a clear QA problem statement and identify the business rules
+-> Problem statement: the system must prevent duplicate account mappings
+-> Business rules:
+  - one account cannot have a duplicate mapping
+  - master account must be exactly 17 digits
+  - only valid master accounts can be mapped
+  - show a clear message when a duplicate mapping is attempted
+  - inactive accounts cannot be mapped
+  - existing mappings must be validated
+  - a company account cannot be used by another company 
+
+
+** Always review AI output against the real requirement before using it
+
+
+Key Takeaways:
+-> STLC covers QA's works from first requirement to closed release
+-> A ready environment, users and test data come before execution
+-> Every requirement raises questions about validations, boundaries and invalid data
+-> AI can turn requirements into problem statements, always review its output
+
+
+
+
+What is a Test Plan?
+-> a formal document that identifies:
+  - what will be tested (scope)
+  - how testing will be performed (approach)
+  - who will perform testing (roles)
+  - when testing will be performed (schedule)
+  - which resources are required 
+  - what risks and constraints exist
+-> purpose: to provide a clear roadmap for the entire testing process
+
+
+
+                    						
+Effective Test Case Structure:
+
+        Field                                 Purpose
+----------------------             --------------------------------
+  Test Case ID			        Unique Identification
+  Title				        What is being tested
+  Preconditions			        Required setup
+  Test steps				Actions to perform
+  Test data				Input values
+  Expected result			Expected system behavior
+  Actual result				Observed behavior
+  Status				Pass/Fail
+
+
+
+
+
+The Modern Defect Life Cycle:
+-> Step 1 New: bug logged by QA
+-> Step 2 Open/Assigned: triaged and assigned to dev
+-> Step 3 Fixed: code fix committed
+-> Step 4 Retest: QA verifies fix in QA environment 
+-> Step 5 Closed: verified and marked done
+
+
+
+Key Defect Governance and Edge Transitions:
+-> Deferred: defect acknowledged but scheduled for a future release due to business priorities
+-> Rejected/Invalid: issue cannot be reproduced, working as per specification or duplicate
+-> Reopened: defect fix failed during QA retesting; requires developer re-investigation
+-> Duplicate: defect already reported in another ticket; linked to master issue and closed
+
+
+
+
+Retesting vs Regression Testing
+Retesting:
+-> Definition: validating that a specific reported bug has been fixed
+-> Scope: narrow & targeted (single test case / defect ID)
+-> Execution Timing: performed immediately after developer  
+-> Automation Suitability: mostly manual unless part of automated unit test
+-> Banking Example: re-verifying $5000 swift transfer otp submission
+
+        
+Regression Testing
+-> Definition: ensuring new changes haven't broken existing features
+-> Scope: broad & systematic (entire application or feature suite)
+-> Execution Timing: executed during sprint hardening or before release
+-> Automation Suitability: high candidate for automated regression test suites
+-> Banking Example: executing full deposit, transfer and statement generation suite    	
