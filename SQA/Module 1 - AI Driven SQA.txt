@@ -65,6 +65,30 @@ Understanding Quality Models:
 
 
 
+How AI is Reshaping Software Testing:
+-> From scripted to intelligent: traditional automation follows fixed scripts. AI driven testing understands intent, 
+   adapts to change, and learns from past runs
+-> AI across SDLC: AI now assists in requirement analysis, test case generation, code review, execution and defect triage
+-> Self-healing automation: when a locator breaks due to UI changes, AI automatically finds the new element and updates the 
+   test, reducing maintenance
+-> Intelligent reporting: AI summarizes failures, clusters similar defects, and highlights root causes instead of raw
+   pass/fail logs
+
+
 
 AI Powered Testing Tools:
+-> Claud Code, GitHub Copilot, Gemini, ChatGPT
 -> used across the SDLC for requirement analysis, test case generation, code review and defect triage 
+
+
+
+SQA in Agile:
+-> Scrum and Sprint: Scrum is an agile framework organizing work into short, time-boxed sprints (usually 1-2 weeks)
+   with regular delivery
+-> User Story: a short plain-language description of a feature from the user's perspective e.g.("As a customer, I want 
+   to reset my password")
+-> Acceptance Criteria: The specific, testable conditions a user story must meet to be considered complete. QA's primary
+   source for test case design
+-> Definition of Done (Dod): A shared team checklist (coded, tested, reviewed, documented) confirming a story is truly 
+   finished, not just coded
+-> 
